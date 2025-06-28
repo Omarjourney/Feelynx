@@ -1,489 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feelynx - Premium Adult Entertainment Platform</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Feelynx - Premium Adult Entertainment Platform</title>
+
+  <!-- Font + Styles -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Main Application (No Age Gate) -->
-    <div id="mainApp" class="main-app">
-        <!-- Navigation -->
-        <nav class="nav-bar">
-            <div class="nav-content">
-                <div class="logo-container">
-                    <div class="feelynx-logo-nav" id="navLogo">
-                        <div class="lynx-mascot-small">
-                            <div class="lynx-face-small">
-                                <div class="lynx-ear-small left"></div>
-                                <div class="lynx-ear-small right"></div>
-                                <div class="lynx-eyes-small">
-                                    <div class="eye-small left" id="leftEye"></div>
-                                    <div class="eye-small right" id="rightEye"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="feelynx-text">Feelynx</span>
-                    </div>
-                </div>
-                <div class="nav-tabs">
-                    <button class="nav-tab active" data-tab="explore">
-                        <span class="tab-icon">🌍</span>
-                        <span class="tab-text">Explore</span>
-                    </button>
-                    <button class="nav-tab" data-tab="creators">
-                        <span class="tab-icon">⭐</span>
-                        <span class="tab-text">Creators</span>
-                    </button>
-                    <button class="nav-tab" data-tab="content">
-                        <span class="tab-icon">📸</span>
-                        <span class="tab-text">Content</span>
-                    </button>
-                    <button class="nav-tab" data-tab="calls">
-                        <span class="tab-icon">📞</span>
-                        <span class="tab-text">Calls</span>
-                    </button>
-                    <button class="nav-tab" data-tab="tokens">
-                        <span class="tab-icon">💎</span>
-                        <span class="tab-text">Tokens</span>
-                    </button>
-                    <button class="nav-tab" data-tab="groups">
-                        <span class="tab-icon">👥</span>
-                        <span class="tab-text">Groups</span>
-                    </button>
-                    <button class="nav-tab" data-tab="dashboard">
-                        <span class="tab-icon">📊</span>
-                        <span class="tab-text">Dashboard</span>
-                    </button>
-                </div>
-                <div class="nav-language">
-                    <select id="languageSelector" class="language-select">
-                        <option value="en">🌐 English</option>
-                        <option value="es">🌐 Español</option>
-                        <option value="pt">🌐 Português</option>
-                    </select>
-                </div>
-            </div>
-        </nav>
 
-        <!-- Tab Content -->
-        <main class="main-content">
-            <!-- Explore Tab -->
-            <div id="explore" class="tab-content active">
-                <div class="container">
-                    <!-- Hero Section -->
-                    <section class="hero-section">
-                        <div class="hero-content">
-                            <h1 class="hero-title">Join the Hottest Creators Now</h1>
-                            <p class="hero-subtitle">Connect with premium creators from around the world on Feelynx</p>
-                            <div class="hero-stats">
-                                <div class="stat-item">
-                                    <span class="stat-value" data-count="847000">847,000+</span>
-                                    <span class="stat-label">Active Users</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" data-count="25000">25,000+</span>
-                                    <span class="stat-label">Creators</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" data-count="2400000">$2.4M+</span>
-                                    <span class="stat-label">Revenue</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+  <!-- REACTIVE HEADER -->
+  <header class="site-header">
+    <nav class="nav-bar">
+      <ul class="nav-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
 
-                    <!-- Live Creator Carousel -->
-                    <section class="live-carousel-section">
-                        <h2>🔴 Live Now</h2>
-                        <div class="live-carousel" id="liveCarousel"></div>
-                    </section>
-
-                    <!-- Featured Sections -->
-                    <section class="featured-sections">
-                        <div class="section-tabs">
-                            <button class="section-tab active" data-section="featured">Featured Creators</button>
-                            <button class="section-tab" data-section="today">Today's Creators</button>
-                            <button class="section-tab" data-section="weekly">Weekly Standouts</button>
-                            <button class="section-tab" data-section="alltime">All-Time Favorites</button>
-                        </div>
-                        
-                        <div class="section-content">
-                            <div id="featured" class="creator-section active">
-                                <div class="creator-grid" id="featuredCreators"></div>
-                            </div>
-                            <div id="today" class="creator-section">
-                                <div class="creator-grid" id="todayCreators"></div>
-                            </div>
-                            <div id="weekly" class="creator-section">
-                                <div class="creator-grid" id="weeklyCreators"></div>
-                            </div>
-                            <div id="alltime" class="creator-section">
-                                <div class="creator-grid" id="alltimeCreators"></div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-
-            <!-- Creators Tab -->
-            <div id="creators" class="tab-content">
-                <div class="container">
-                    <!-- Live Now Carousel -->
-                    <section class="live-carousel-section">
-                        <h2>🔴 Live Now</h2>
-                        <div class="live-carousel" id="liveCarouselCreators"></div>
-                    </section>
-
-                    <!-- Search & Filters -->
-                    <div class="premium-search-filters">
-                        <div class="search-bar">
-                            <div class="search-input-container">
-                                <span class="search-icon">🔍</span>
-                                <input type="text" class="form-control search-input" id="creatorSearch" 
-                                       placeholder="Search creators by @username, country, or specialties...">
-                            </div>
-                        </div>
-                        
-                        <div class="advanced-filters">
-                            <select id="countryFilter" class="form-control filter-select">
-                                <option value="">🌍 All Countries</option>
-                            </select>
-                            
-                            <select id="ageFilter" class="form-control filter-select">
-                                <option value="">👤 All Ages</option>
-                                <option value="18-24">18-24</option>
-                                <option value="25-34">25-34</option>
-                                <option value="35-44">35-44</option>
-                                <option value="45+">45+</option>
-                            </select>
-                            
-                            <select id="specialtyFilter" class="form-control filter-select">
-                                <option value="">✨ All Specialties</option>
-                            </select>
-                            
-                            <div class="filter-toggles">
-                                <label class="toggle-label">
-                                    <input type="checkbox" id="onlineOnlyFilter" class="toggle-input">
-                                    <span class="toggle-slider"></span>
-                                    <span class="toggle-text">Online Only</span>
-                                </label>
-                                
-                                <label class="toggle-label">
-                                    <input type="checkbox" id="toyConnectedFilter" class="toggle-input">
-                                    <span class="toggle-slider"></span>
-                                    <span class="toggle-text">Toy Connected</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="creator-grid" id="allCreators"></div>
-                </div>
-            </div>
-
-            <!-- Content Tab -->
-            <div id="content" class="tab-content">
-                <div class="container">
-                    <div class="content-header">
-                        <h2>Premium Content Marketplace</h2>
-                        <div class="content-filters">
-                            <button class="content-filter active" data-type="all">All Content</button>
-                            <button class="content-filter" data-type="photos">📸 Photos</button>
-                            <button class="content-filter" data-type="videos">🎥 Videos</button>
-                            <button class="content-filter" data-type="voice">🎵 Voice</button>
-                            <button class="content-filter" data-type="bundles">📦 Bundles</button>
-                        </div>
-                    </div>
-                    <div class="content-grid" id="contentGrid"></div>
-                </div>
-            </div>
-
-            <!-- Calls Tab -->
-            <div id="calls" class="tab-content">
-                <div class="container">
-                    <div class="calls-header">
-                        <h2>Private Video & Voice Calls</h2>
-                        <div class="call-rates">
-                            <div class="rate-info">
-                                <span class="rate-icon">📹</span>
-                                <span>Video: 30 tokens/min</span>
-                            </div>
-                            <div class="rate-info">
-                                <span class="rate-icon">🎵</span>
-                                <span>Voice: 20 tokens/min</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="call-creators" id="callCreators"></div>
-                </div>
-            </div>
-
-            <!-- Tokens Tab -->
-            <div id="tokens" class="tab-content">
-                <div class="container">
-                    <div class="tokens-header">
-                        <h2>💎 Purchase Tokens</h2>
-                        <p class="tokens-subtitle">Unlock premium content and features with Feelynx tokens</p>
-                    </div>
-                    
-                    <div class="token-packs" id="tokenPacks"></div>
-                    
-                    <div class="mystery-bonus-info">
-                        <h3>🎁 Mystery Bonus System</h3>
-                        <div class="bonus-features">
-                            <div class="bonus-item">
-                                <span class="bonus-icon">🎯</span>
-                                <span>Spin-to-reveal animations</span>
-                            </div>
-                            <div class="bonus-item">
-                                <span class="bonus-icon">🎊</span>
-                                <span>Confetti celebrations</span>
-                            </div>
-                            <div class="bonus-item">
-                                <span class="bonus-icon">🏆</span>
-                                <span>VIP access rewards</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Groups Tab -->
-            <div id="groups" class="tab-content">
-                <div class="container">
-                    <div class="groups-header">
-                        <h2>👥 Private Groups</h2>
-                        <p class="groups-subtitle">Join exclusive communities with 24hr expiring invites</p>
-                    </div>
-
-                    <!-- Group Announcements -->
-                    <section class="group-announcements">
-                        <h3>📢 Group Announcements</h3>
-                        <div class="announcements-grid" id="announcementsGrid"></div>
-                    </section>
-
-                    <!-- Create Group -->
-                    <section class="create-group-section">
-                        <div class="create-group-card">
-                            <h4>Create New Private Group</h4>
-                            <p>Build your exclusive community with 24hr expiring invites</p>
-                            <button class="btn btn--primary" id="createGroupBtn">Create Group</button>
-                        </div>
-                    </section>
-
-                    <!-- Groups Grid -->
-                    <section class="groups-section">
-                        <h3>Your Groups</h3>
-                        <div class="groups-grid" id="groupsGrid"></div>
-                    </section>
-                </div>
-            </div>
-
-            <!-- Dashboard Tab -->
-            <div id="dashboard" class="tab-content">
-                <div class="container">
-                    <div class="dashboard-header">
-                        <h2>Creator Dashboard</h2>
-                        <div class="dashboard-stats">
-                            <div class="quick-stat">
-                                <span class="stat-value">$5,240</span>
-                                <span class="stat-label">Total Earnings</span>
-                            </div>
-                            <div class="quick-stat">
-                                <span class="stat-value">94%</span>
-                                <span class="stat-label">Your Share</span>
-                            </div>
-                            <div class="quick-stat">
-                                <span class="stat-value">12.8k</span>
-                                <span class="stat-label">Subscribers</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3D Analytics Section -->
-                    <section class="analytics-section">
-                        <h3>📊 3D Analytics Dashboard</h3>
-                        <div class="holographic-analytics">
-                            <div class="analytics-grid">
-                                <div class="analytics-card">
-                                    <div class="card-header">
-                                        <h4>Revenue Stream</h4>
-                                        <div class="hologram-indicator"></div>
-                                    </div>
-                                    <div class="animated-chart">
-                                        <div class="revenue-bars">
-                                            <div class="bar" style="height: 60%;" data-value="$1,200"></div>
-                                            <div class="bar" style="height: 80%;" data-value="$1,600"></div>
-                                            <div class="bar" style="height: 45%;" data-value="$900"></div>
-                                            <div class="bar" style="height: 90%;" data-value="$1,800"></div>
-                                            <div class="bar" style="height: 70%;" data-value="$1,400"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="analytics-card">
-                                    <div class="card-header">
-                                        <h4>Content Performance</h4>
-                                        <div class="viral-score">🔥 Viral Score: 8.5/10</div>
-                                    </div>
-                                    <div class="performance-metrics">
-                                        <div class="metric">
-                                            <span class="metric-label">Photos</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 85%;"></div>
-                                            </div>
-                                            <span class="metric-value">85%</span>
-                                        </div>
-                                        <div class="metric">
-                                            <span class="metric-label">Videos</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 92%;"></div>
-                                            </div>
-                                            <span class="metric-value">92%</span>
-                                        </div>
-                                        <div class="metric">
-                                            <span class="metric-label">Voice</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 78%;"></div>
-                                            </div>
-                                            <span class="metric-value">78%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Achievement Trophy Room -->
-                    <section class="trophy-room">
-                        <h3>🏆 Achievement Trophy Room</h3>
-                        <div class="trophies-grid">
-                            <div class="trophy-3d active">
-                                <div class="trophy-model">🥇</div>
-                                <div class="trophy-info">
-                                    <h4>Top Earner</h4>
-                                    <p>$5K+ Monthly</p>
-                                </div>
-                            </div>
-                            <div class="trophy-3d active">
-                                <div class="trophy-model">⭐</div>
-                                <div class="trophy-info">
-                                    <h4>Fan Favorite</h4>
-                                    <p>1000+ Subscribers</p>
-                                </div>
-                            </div>
-                            <div class="trophy-3d">
-                                <div class="trophy-model">💎</div>
-                                <div class="trophy-info">
-                                    <h4>Premium Creator</h4>
-                                    <p>50K+ Tokens Earned</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- ID Verification Section -->
-                    <section class="verification-section">
-                        <h3>🆔 ID Verification</h3>
-                        <div class="verification-card">
-                            <div class="verification-status">
-                                <span class="status-icon">✅</span>
-                                <span class="status-text">Verified Creator</span>
-                                <span class="blue-checkmark">💙</span>
-                            </div>
-                            <p>Your identity has been verified. You now have a blue checkmark badge!</p>
-                        </div>
-                    </section>
-
-                    <!-- Geo-blocking Settings -->
-                    <section class="geo-blocking-section">
-                        <h3>🌍 Geo-blocking Settings</h3>
-                        <div class="geo-controls">
-                            <label class="form-label">Block My Content in These Countries</label>
-                            <select id="geoBlockSelect" class="form-control geo-select" multiple>
-                            </select>
-                            <button id="saveGeoBlocking" class="btn btn--primary">Save Geo Settings</button>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </main>
+    <div class="logo-container">
+      <div id="mascot" class="mascot">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path id="body" d="M50,180 C20,100 80,20 120,60 S140,160 50,180" fill="#E91E63"/>
+          <circle id="eyeL" cx="70" cy="80" r="10" fill="#fff"/>
+          <circle id="pupilL" cx="70" cy="80" r="5" fill="#000"/>
+          <circle id="eyeR" cx="100" cy="80" r="10" fill="#fff"/>
+          <circle id="pupilR" cx="100" cy="80" r="5" fill="#000"/>
+          <path id="tail" d="M120,140 C140,150 160,130 140,120"
+                stroke="#D81B60" stroke-width="8" fill="none"
+                stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 class="logo">
+        <span class="logo-f">F</span>eelynx
+      </h1>
     </div>
 
-    <!-- USD Tip Modal -->
-    <div id="tipModal" class="modal">
-        <div class="modal-content premium-modal">
-            <div class="modal-header">
-                <h3>💸 Direct USD Tip</h3>
-                <div class="tip-info">Creator keeps 94% • Direct credit card charge</div>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="tip-amounts" id="tipAmounts"></div>
-                <div class="custom-tip">
-                    <input type="number" id="customTipAmount" class="form-control" placeholder="Custom amount ($)" min="1">
-                </div>
-                <div id="tipConfirmation" class="tip-confirmation hidden">
-                    <div class="confirmation-card">
-                        <p id="tipConfirmText"></p>
-                        <div class="payment-security">
-                            <span class="security-icon">🔒</span>
-                            <span>Secure payment processing</span>
-                        </div>
-                        <button id="confirmTip" class="btn btn--primary btn--full-width">Confirm Payment</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <p class="tagline">Connect Sensually</p>
+  </header>
+  <!-- END REACTIVE HEADER -->
 
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content success-modal">
-            <div class="success-animation">
-                <div class="success-icon">🎉</div>
-                <div class="sparkles" id="successSparkles"></div>
-            </div>
-            <h3 id="successTitle">Success!</h3>
-            <p id="successMessage"></p>
-            <button id="closeSuccess" class="btn btn--primary">Continue</button>
-        </div>
-    </div>
+  <div id="mainApp" class="main-app">
+    <!-- existing content -->
+  </div>
 
-    <!-- Group Creation Modal -->
-    <div id="groupModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create Private Group</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Group Name</label>
-                    <input type="text" id="groupName" class="form-control" placeholder="Enter group name">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Group Theme</label>
-                    <select id="groupTheme" class="form-control">
-                        <option value="general">General</option>
-                        <option value="gaming">Gaming</option>
-                        <option value="luxury">Luxury</option>
-                        <option value="interactive">Interactive</option>
-                    </select>
-                </div>
-                <div class="invite-info">
-                    <p>📅 Invite links expire in 24 hours</p>
-                    <p>👥 Maximum 50 members per group</p>
-                    <p>🎭 Support multi-creator live shows</p>
-                </div>
-                <button id="createGroup" class="btn btn--primary btn--full-width">Create Group</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
