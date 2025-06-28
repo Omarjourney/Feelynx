@@ -2900,12 +2900,12 @@ a:hover { color: var(--color-primary-hover); }
 
 /* FORCE mascot image size everywhere */
 img[alt="Feelynx Mascot"] {
-  width: 56px !important;
-  height: 56px !important;
-  max-width: 56px !important;
-  max-height: 56px !important;
+  width: 70px !important;
+  height: 70px !important;
+  max-width: 70px !important;
+  max-height: 70px !important;
   object-fit: contain !important;
   display: inline-block !important;
-  margin-right: 12px !important;
+  margin-right: 16px !important;
   vertical-align: middle !important;
 }
