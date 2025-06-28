@@ -984,7 +984,7 @@ a:hover { color: var(--color-primary-hover); }
 .feelynx-logo-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0px;
   cursor: pointer;
   transition: transform var(--duration-fast) var(--ease-standard);
 }
@@ -2928,7 +2928,7 @@ img[alt="Feelynx Mascot"] {
   color: transparent;
   vertical-align: middle;
   letter-spacing: -0.04em;
-  margin-left: 0px;
+  margin-left: -10px;
   display: inline-block;
   text-shadow: 0 2px 8px rgba(255, 95, 109, 0.13);
 }
