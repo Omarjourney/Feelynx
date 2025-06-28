@@ -2,11 +2,16 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="1024.000000pt" height="1024.000000pt" viewBox="0 0 1024.000000 1024.000000"
+ width="1024.000000pt" height="1024.000000pt" viewBox="0 0 1024.000000 1024.000000"<defs>
+    <linearGradient id="mascot-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8338B"/>
+      <stop offset="100%" stop-color="#FF5E79"/>
+    </linearGradient>
+  </defs>
  preserveAspectRatio="xMidYMid meet">
 
-<g transform="translate(0.000000,1024.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+<g transform="translate(...)" fill="url(#mascot-gradient)" stroke="none">
+<path fill="url(#mascot-gradient)" />
 <path d="M2544 9262 c-190 -123 -358 -359 -414 -582 -27 -107 -36 -277 -21
 -395 7 -49 30 -142 51 -205 l39 -115 -19 -25 c-128 -164 -297 -472 -375 -684
 -209 -569 -260 -1213 -139 -1747 141 -625 519 -1097 1348 -1685 111 -79 210
