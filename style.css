@@ -2909,3 +2909,26 @@ img[alt="Feelynx Mascot"] {
   margin-right: 16px !important;
   vertical-align: middle !important;
 }
+/* Feelynx Mascot + Logo Styling */
+.mascot-f {
+  height: 70px;
+  margin-right: 0px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.feelynx-gradient {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #FFC371 0%, #FF5F6D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  vertical-align: middle;
+  letter-spacing: -0.04em;
+  margin-left: 0px;
+  display: inline-block;
+  text-shadow: 0 2px 8px rgba(255, 95, 109, 0.13);
+}
