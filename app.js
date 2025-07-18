@@ -411,10 +411,24 @@ function initializeLanguageSelector() {
     const languageSelector = document.getElementById('languageSelector');
     if (languageSelector) {
         languageSelector.addEventListener('change', function() {
-            currentLanguage = this.value;
-            translateInterface();
+            translatePage(this.value);
         });
     }
+}
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+}
+
+function translatePage(lang) {
+    const map = { 'en': '/en/en', 'es': '/en/es', 'pt': '/en/pt' };
+    setCookie('googtrans', map[lang] || '/en/en', 1);
+    currentLanguage = lang;
+    translateInterface();
+    location.reload();
 }
 
 function translateInterface() {

@@ -476,6 +476,13 @@
         </div>
     </div>
 
+    <div id="google_translate_element" style="display:none"></div>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,pt'}, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="app.js"></script>
 </body>
 </html>
