@@ -228,6 +228,14 @@
                     <div class="call-creators" id="callCreators">
                         <p class="no-js-fallback">Creators loading...</p>
                     </div>
+
+                    <div class="webrtc-demo">
+                        <button id="startCall">Start Call</button>
+                        <div id="videos">
+                            <video id="localVideo" autoplay muted></video>
+                            <video id="remoteVideo" autoplay></video>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -507,6 +515,7 @@
         }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="webrtc.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
