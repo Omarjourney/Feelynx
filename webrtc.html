@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feelynx WebRTC Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    video { width: 45%; margin: 5px; background: #000; }
+    #videos { display: flex; justify-content: center; margin-top: 20px; }
+    #startCall { display: block; margin: 20px auto; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center">WebRTC Demo</h1>
+  <button id="startCall">Start Call</button>
+  <div id="videos">
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+  </div>
+  <script src="webrtc.js"></script>
+</body>
+</html>
