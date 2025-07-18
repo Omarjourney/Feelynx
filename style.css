@@ -2935,3 +2935,22 @@ img[alt="Feelynx Mascot"] {
   display: inline-block;
   text-shadow: 0 2px 8px rgba(255, 95, 109, 0.13);
 }
+
+/* WebRTC demo elements */
+.webrtc-demo #videos {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.webrtc-demo video {
+  width: 45%;
+  margin: 5px;
+  background: #000;
+}
+
+#startCall {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+}
