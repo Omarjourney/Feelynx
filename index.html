@@ -19,32 +19,32 @@
                      <img src="mascot.svg" alt="Feelynx Mascot" class="mascot-f" /><span class="feelynx-gradient">eelynx</span>
                 </div>
         
-                <div class="nav-tabs">
-                    <button class="nav-tab active" data-tab="explore">
+                <div class="nav-tabs" role="tablist">
+                    <button id="tab-explore" role="tab" aria-controls="explore" aria-selected="true" tabindex="0" class="nav-tab active" data-tab="explore">
                         <span class="tab-icon">🌍</span>
                         <span class="tab-text">Explore</span>
                     </button>
-                    <button class="nav-tab" data-tab="creators">
+                    <button id="tab-creators" role="tab" aria-controls="creators" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="creators">
                         <span class="tab-icon">⭐</span>
                         <span class="tab-text">Creators</span>
                     </button>
-                    <button class="nav-tab" data-tab="content">
+                    <button id="tab-content" role="tab" aria-controls="content" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="content">
                         <span class="tab-icon">📸</span>
                         <span class="tab-text">Content</span>
                     </button>
-                    <button class="nav-tab" data-tab="calls">
+                    <button id="tab-calls" role="tab" aria-controls="calls" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="calls">
                         <span class="tab-icon">📞</span>
                         <span class="tab-text">Calls</span>
                     </button>
-                    <button class="nav-tab" data-tab="tokens">
+                    <button id="tab-tokens" role="tab" aria-controls="tokens" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="tokens">
                         <span class="tab-icon">💎</span>
                         <span class="tab-text">Tokens</span>
                     </button>
-                    <button class="nav-tab" data-tab="groups">
+                    <button id="tab-groups" role="tab" aria-controls="groups" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="groups">
                         <span class="tab-icon">👥</span>
                         <span class="tab-text">Groups</span>
                     </button>
-                    <button class="nav-tab" data-tab="dashboard">
+                    <button id="tab-dashboard" role="tab" aria-controls="dashboard" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="dashboard">
                         <span class="tab-icon">📊</span>
                         <span class="tab-text">Dashboard</span>
                     </button>
@@ -62,7 +62,7 @@
         <!-- Tab Content -->
         <main class="main-content">
             <!-- Explore Tab -->
-            <div id="explore" class="tab-content active">
+            <div id="explore" class="tab-content active" role="tabpanel" aria-labelledby="tab-explore">
                 <div class="container">
                     <!-- Hero Section -->
                     <section class="hero-section">
@@ -89,7 +89,9 @@
                     <!-- Live Creator Carousel -->
                     <section class="live-carousel-section">
                         <h2>🔴 Live Now</h2>
-                        <div class="live-carousel" id="liveCarousel"></div>
+                        <div class="live-carousel" id="liveCarousel">
+                            <p class="no-js-fallback">Live content loading...</p>
+                        </div>
                     </section>
 
                     <!-- Featured Sections -->
@@ -103,16 +105,24 @@
                         
                         <div class="section-content">
                             <div id="featured" class="creator-section active">
-                                <div class="creator-grid" id="featuredCreators"></div>
+                                <div class="creator-grid" id="featuredCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
                             </div>
                             <div id="today" class="creator-section">
-                                <div class="creator-grid" id="todayCreators"></div>
+                                <div class="creator-grid" id="todayCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
                             </div>
                             <div id="weekly" class="creator-section">
-                                <div class="creator-grid" id="weeklyCreators"></div>
+                                <div class="creator-grid" id="weeklyCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
                             </div>
                             <div id="alltime" class="creator-section">
-                                <div class="creator-grid" id="alltimeCreators"></div>
+                                <div class="creator-grid" id="alltimeCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -120,12 +130,14 @@
             </div>
 
             <!-- Creators Tab -->
-            <div id="creators" class="tab-content">
+            <div id="creators" class="tab-content" role="tabpanel" aria-labelledby="tab-creators">
                 <div class="container">
                     <!-- Live Now Carousel -->
                     <section class="live-carousel-section">
                         <h2>🔴 Live Now</h2>
-                        <div class="live-carousel" id="liveCarouselCreators"></div>
+                        <div class="live-carousel" id="liveCarouselCreators">
+                            <p class="no-js-fallback">Live content loading...</p>
+                        </div>
                     </section>
 
                     <!-- Search & Filters -->
@@ -171,12 +183,14 @@
                         </div>
                     </div>
                     
-                    <div class="creator-grid" id="allCreators"></div>
+                    <div class="creator-grid" id="allCreators">
+                        <p class="no-js-fallback">Creator list loading...</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Content Tab -->
-            <div id="content" class="tab-content">
+            <div id="content" class="tab-content" role="tabpanel" aria-labelledby="tab-content">
                 <div class="container">
                     <div class="content-header">
                         <h2>Premium Content Marketplace</h2>
@@ -188,12 +202,14 @@
                             <button class="content-filter" data-type="bundles">📦 Bundles</button>
                         </div>
                     </div>
-                    <div class="content-grid" id="contentGrid"></div>
+                    <div class="content-grid" id="contentGrid">
+                        <p class="no-js-fallback">Content loading...</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Calls Tab -->
-            <div id="calls" class="tab-content">
+            <div id="calls" class="tab-content" role="tabpanel" aria-labelledby="tab-calls">
                 <div class="container">
                     <div class="calls-header">
                         <h2>Private Video & Voice Calls</h2>
@@ -209,19 +225,23 @@
                         </div>
                     </div>
                     
-                    <div class="call-creators" id="callCreators"></div>
+                    <div class="call-creators" id="callCreators">
+                        <p class="no-js-fallback">Creators loading...</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Tokens Tab -->
-            <div id="tokens" class="tab-content">
+            <div id="tokens" class="tab-content" role="tabpanel" aria-labelledby="tab-tokens">
                 <div class="container">
                     <div class="tokens-header">
                         <h2>💎 Purchase Tokens</h2>
                         <p class="tokens-subtitle">Unlock premium content and features with Feelynx tokens</p>
                     </div>
                     
-                    <div class="token-packs" id="tokenPacks"></div>
+                    <div class="token-packs" id="tokenPacks">
+                        <p class="no-js-fallback">Token packs loading...</p>
+                    </div>
                     
                     <div class="mystery-bonus-info">
                         <h3>🎁 Mystery Bonus System</h3>
@@ -244,7 +264,7 @@
             </div>
 
             <!-- Groups Tab -->
-            <div id="groups" class="tab-content">
+            <div id="groups" class="tab-content" role="tabpanel" aria-labelledby="tab-groups">
                 <div class="container">
                     <div class="groups-header">
                         <h2>👥 Private Groups</h2>
@@ -254,7 +274,9 @@
                     <!-- Group Announcements -->
                     <section class="group-announcements">
                         <h3>📢 Group Announcements</h3>
-                        <div class="announcements-grid" id="announcementsGrid"></div>
+                        <div class="announcements-grid" id="announcementsGrid">
+                            <p class="no-js-fallback">Announcements loading...</p>
+                        </div>
                     </section>
 
                     <!-- Create Group -->
@@ -269,13 +291,15 @@
                     <!-- Groups Grid -->
                     <section class="groups-section">
                         <h3>Your Groups</h3>
-                        <div class="groups-grid" id="groupsGrid"></div>
+                        <div class="groups-grid" id="groupsGrid">
+                            <p class="no-js-fallback">No groups found...</p>
+                        </div>
                     </section>
                 </div>
             </div>
 
             <!-- Dashboard Tab -->
-            <div id="dashboard" class="tab-content">
+            <div id="dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-dashboard">
                 <div class="container">
                     <div class="dashboard-header">
                         <h2>Creator Dashboard</h2>
@@ -406,10 +430,10 @@
     </div>
 
     <!-- USD Tip Modal -->
-    <div id="tipModal" class="modal">
+    <div id="tipModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tipModalTitle">
         <div class="modal-content premium-modal">
             <div class="modal-header">
-                <h3>💸 Direct USD Tip</h3>
+                <h3 id="tipModalTitle">💸 Direct USD Tip</h3>
                 <div class="tip-info">Creator keeps 94% • Direct credit card charge</div>
                 <button class="modal-close">&times;</button>
             </div>
@@ -433,7 +457,7 @@
     </div>
 
     <!-- Success Modal -->
-    <div id="successModal" class="modal">
+    <div id="successModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
         <div class="modal-content success-modal">
             <div class="success-animation">
                 <div class="success-icon">🎉</div>
@@ -446,10 +470,10 @@
     </div>
 
     <!-- Group Creation Modal -->
-    <div id="groupModal" class="modal">
+    <div id="groupModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="groupModalTitle">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Create Private Group</h3>
+                <h3 id="groupModalTitle">Create Private Group</h3>
                 <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
