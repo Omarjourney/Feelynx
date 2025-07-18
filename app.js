@@ -516,8 +516,8 @@ function initializeNavigation() {
             const targetTab = this.dataset.tab;
             
             // Animated tab transition
-            navTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
+            navTabs.forEach(t => {t.classList.remove('active');t.setAttribute('aria-selected','false');t.setAttribute('tabindex','-1');});
+            this.classList.add('active');this.setAttribute('aria-selected','true');this.setAttribute('tabindex','0');
             
             tabContents.forEach(content => {
                 content.classList.remove('active');
@@ -539,7 +539,7 @@ function initializeNavigation() {
             const targetSection = this.dataset.section;
             
             sectionTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
+            this.classList.add('active');this.setAttribute('aria-selected','true');this.setAttribute('tabindex','0');
             
             document.querySelectorAll('.creator-section').forEach(section => {
                 section.classList.remove('active');
@@ -926,7 +926,7 @@ function initializeContentFilters() {
     filters.forEach(filter => {
         filter.addEventListener('click', function() {
             filters.forEach(f => f.classList.remove('active'));
-            this.classList.add('active');
+            this.classList.add('active');this.setAttribute('aria-selected','true');this.setAttribute('tabindex','0');
             
             const type = this.dataset.type;
             filterContentByType(type);
@@ -1172,7 +1172,7 @@ function initializeGroupsFeatures() {
     
     if (createGroupBtn) {
         createGroupBtn.addEventListener('click', function() {
-            document.getElementById('groupModal').classList.add('active');
+            openModal(document.getElementById('groupModal'));
         });
     }
     
@@ -1180,6 +1180,27 @@ function initializeGroupsFeatures() {
         createGroup.addEventListener('click', createNewGroup);
     }
 }
+function openModal(modal){
+    if(!modal) return;
+    modal.classList.add("active");
+    const focusable=modal.querySelectorAll("a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex=-1])");
+    const first=focusable[0];
+    const last=focusable[focusable.length-1];
+    modal.__trap=function(e){
+        if(e.key==="Tab"){
+            if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+            else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+        }
+    };
+    modal.addEventListener("keydown",modal.__trap);
+    first&&first.focus();
+}
+function closeModal(modal){
+    if(!modal) return;
+    modal.classList.remove("active");
+    if(modal.__trap){modal.removeEventListener("keydown",modal.__trap);delete modal.__trap;}
+}
+
 
 // Modal System
 function initializeModals() {
@@ -1191,13 +1212,13 @@ function initializeModals() {
     
     modalCloses.forEach(close => {
         close.addEventListener('click', function() {
-            this.closest('.modal').classList.remove('active');
+            closeModal(this.closest('.modal'));
         });
     });
     
     if (closeSuccess) {
         closeSuccess.addEventListener('click', function() {
-            successModal.classList.remove('active');
+            closeModal(successModal);
         });
     }
     
@@ -1208,7 +1229,7 @@ function initializeModals() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
-                this.classList.remove('active');
+                closeModal(this);
             }
         });
     });
@@ -1302,7 +1323,7 @@ function processTip() {
     if (!selectedTipAmount || !selectedCreatorForTip) return;
     
     const tipModal = document.getElementById('tipModal');
-    tipModal.classList.remove('active');
+    closeModal(tipModal);
     
     // Simulate payment processing
     showLoadingAnimation();
@@ -1443,7 +1464,7 @@ function showSuccessModal(title, message) {
     
     titleEl.textContent = title;
     messageEl.innerHTML = message.replace(/\n/g, '<br>');
-    modal.classList.add('active');
+    openModal(modal);
     
     // Add sparkles to success modal
     createSuccessSparkles();
@@ -1653,7 +1674,7 @@ function createNewGroup() {
         return;
     }
     
-    document.getElementById('groupModal').classList.remove('active');
+    closeModal(document.getElementById('groupModal'));
     
     createConfettiAnimation();
     showSuccessModal(
@@ -1812,7 +1833,7 @@ function createCustomModal(title, content) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         document.querySelectorAll('.modal.active').forEach(modal => {
-            modal.classList.remove('active');
+            closeModal(modal);
         });
     }
     
