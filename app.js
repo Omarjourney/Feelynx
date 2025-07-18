@@ -576,7 +576,13 @@ function loadSectionContent(section) {
             creators = appData.creators.filter(c => c.isLive).slice(0, 6);
             break;
         case 'weekly':
-            creators = appData.creators.sort((a, b) => parseInt(b.subscribers.replace('k', '')) - parseInt(a.subscribers.replace('k', ''))).slice(0, 6);
+            creators = appData.creators
+                .sort((a, b) => {
+                    const aSubs = parseFloat(a.subscribers.replace('k', '')) * 1000;
+                    const bSubs = parseFloat(b.subscribers.replace('k', '')) * 1000;
+                    return bSubs - aSubs;
+                })
+                .slice(0, 6);
             break;
         case 'alltime':
             creators = appData.creators.sort((a, b) => parseFloat(b.earnings.replace('$', '').replace(',', '')) - parseFloat(a.earnings.replace('$', '').replace(',', ''))).slice(0, 6);
