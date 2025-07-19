@@ -22,31 +22,31 @@
                 <div class="nav-tabs" role="tablist">
                     <button id="tab-explore" role="tab" aria-controls="explore" aria-selected="true" tabindex="0" class="nav-tab active" data-tab="explore">
                         <span class="tab-icon">🌍</span>
-                        <span class="tab-text">Explore</span>
+                        <span class="tab-text" data-i18n="nav.explore">Explore</span>
                     </button>
                     <button id="tab-creators" role="tab" aria-controls="creators" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="creators">
                         <span class="tab-icon">⭐</span>
-                        <span class="tab-text">Creators</span>
+                        <span class="tab-text" data-i18n="nav.creators">Creators</span>
                     </button>
                     <button id="tab-content" role="tab" aria-controls="content" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="content">
                         <span class="tab-icon">📸</span>
-                        <span class="tab-text">Content</span>
+                        <span class="tab-text" data-i18n="nav.content">Content</span>
                     </button>
                     <button id="tab-calls" role="tab" aria-controls="calls" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="calls">
                         <span class="tab-icon">📞</span>
-                        <span class="tab-text">Calls</span>
+                        <span class="tab-text" data-i18n="nav.calls">Calls</span>
                     </button>
                     <button id="tab-tokens" role="tab" aria-controls="tokens" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="tokens">
                         <span class="tab-icon">💎</span>
-                        <span class="tab-text">Tokens</span>
+                        <span class="tab-text" data-i18n="nav.tokens">Tokens</span>
                     </button>
                     <button id="tab-groups" role="tab" aria-controls="groups" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="groups">
                         <span class="tab-icon">👥</span>
-                        <span class="tab-text">Groups</span>
+                        <span class="tab-text" data-i18n="nav.groups">Groups</span>
                     </button>
                     <button id="tab-dashboard" role="tab" aria-controls="dashboard" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="dashboard">
                         <span class="tab-icon">📊</span>
-                        <span class="tab-text">Dashboard</span>
+                        <span class="tab-text" data-i18n="nav.dashboard">Dashboard</span>
                     </button>
                 </div>
                 <div class="nav-language">
@@ -67,8 +67,8 @@
                     <!-- Hero Section -->
                     <section class="hero-section">
                         <div class="hero-content">
-                            <h1 class="hero-title">Join the Hottest Creators Now</h1>
-                            <p class="hero-subtitle">Connect with premium creators from around the world on Feelynx</p>
+                            <h1 class="hero-title" data-i18n="hero.title">Join the Hottest Creators Now</h1>
+                            <p class="hero-subtitle" data-i18n="hero.subtitle">Connect with premium creators from around the world on Feelynx</p>
                             <div class="hero-stats">
                                 <div class="stat-item">
                                     <span class="stat-value" data-count="847000">847,000+</span>
@@ -88,7 +88,7 @@
 
                     <!-- Live Creator Carousel -->
                     <section class="live-carousel-section">
-                        <h2>🔴 Live Now</h2>
+                        <h2 data-i18n="live.now">🔴 Live Now</h2>
                         <div class="live-carousel" id="liveCarousel">
                             <p class="no-js-fallback">Live content loading...</p>
                         </div>
@@ -97,10 +97,10 @@
                     <!-- Featured Sections -->
                     <section class="featured-sections">
                         <div class="section-tabs">
-                            <button class="section-tab active" data-section="featured">Featured Creators</button>
-                            <button class="section-tab" data-section="today">Today's Creators</button>
-                            <button class="section-tab" data-section="weekly">Weekly Standouts</button>
-                            <button class="section-tab" data-section="alltime">All-Time Favorites</button>
+                            <button class="section-tab active" data-section="featured" data-i18n="section.featured">Featured Creators</button>
+                            <button class="section-tab" data-section="today" data-i18n="section.today">Today's Creators</button>
+                            <button class="section-tab" data-section="weekly" data-i18n="section.weekly">Weekly Standouts</button>
+                            <button class="section-tab" data-section="alltime" data-i18n="section.alltime">All-Time Favorites</button>
                         </div>
                         
                         <div class="section-content">
@@ -134,7 +134,7 @@
                 <div class="container">
                     <!-- Live Now Carousel -->
                     <section class="live-carousel-section">
-                        <h2>🔴 Live Now</h2>
+                        <h2 data-i18n="live.now">🔴 Live Now</h2>
                         <div class="live-carousel" id="liveCarouselCreators">
                             <p class="no-js-fallback">Live content loading...</p>
                         </div>
@@ -145,18 +145,17 @@
                         <div class="search-bar">
                             <div class="search-input-container">
                                 <span class="search-icon">🔍</span>
-                                <input type="text" class="form-control search-input" id="creatorSearch" 
-                                       placeholder="Search creators by @username, country, or specialties...">
+                                <input type="text" class="form-control search-input" id="creatorSearch" data-i18n="creator.search.placeholder" placeholder="Search creators by @username, country, or specialties...">
                             </div>
                         </div>
                         
                         <div class="advanced-filters">
                             <select id="countryFilter" class="form-control filter-select">
-                                <option value="">🌍 All Countries</option>
+                                <option value="" data-i18n="filter.allCountries">🌍 All Countries</option>
                             </select>
                             
                             <select id="ageFilter" class="form-control filter-select">
-                                <option value="">👤 All Ages</option>
+                                <option value="" data-i18n="filter.allAges">👤 All Ages</option>
                                 <option value="18-24">18-24</option>
                                 <option value="25-34">25-34</option>
                                 <option value="35-44">35-44</option>
@@ -164,20 +163,20 @@
                             </select>
                             
                             <select id="specialtyFilter" class="form-control filter-select">
-                                <option value="">✨ All Specialties</option>
+                                <option value="" data-i18n="filter.allSpecialties">✨ All Specialties</option>
                             </select>
                             
                             <div class="filter-toggles">
                                 <label class="toggle-label">
                                     <input type="checkbox" id="onlineOnlyFilter" class="toggle-input">
                                     <span class="toggle-slider"></span>
-                                    <span class="toggle-text">Online Only</span>
+                                    <span class="toggle-text" data-i18n="filter.onlineOnly">Online Only</span>
                                 </label>
                                 
                                 <label class="toggle-label">
                                     <input type="checkbox" id="toyConnectedFilter" class="toggle-input">
                                     <span class="toggle-slider"></span>
-                                    <span class="toggle-text">Toy Connected</span>
+                                    <span class="toggle-text" data-i18n="filter.toyConnected">Toy Connected</span>
                                 </label>
                             </div>
                         </div>
@@ -193,13 +192,13 @@
             <div id="content" class="tab-content" role="tabpanel" aria-labelledby="tab-content">
                 <div class="container">
                     <div class="content-header">
-                        <h2>Premium Content Marketplace</h2>
+                        <h2 data-i18n="content.header">Premium Content Marketplace</h2>
                         <div class="content-filters">
-                            <button class="content-filter active" data-type="all">All Content</button>
-                            <button class="content-filter" data-type="photos">📸 Photos</button>
-                            <button class="content-filter" data-type="videos">🎥 Videos</button>
-                            <button class="content-filter" data-type="voice">🎵 Voice</button>
-                            <button class="content-filter" data-type="bundles">📦 Bundles</button>
+                            <button class="content-filter active" data-type="all" data-i18n="content.filter.all">All Content</button>
+                            <button class="content-filter" data-type="photos" data-i18n="content.filter.photos">📸 Photos</button>
+                            <button class="content-filter" data-type="videos" data-i18n="content.filter.videos">🎥 Videos</button>
+                            <button class="content-filter" data-type="voice" data-i18n="content.filter.voice">🎵 Voice</button>
+                            <button class="content-filter" data-type="bundles" data-i18n="content.filter.bundles">📦 Bundles</button>
                         </div>
                     </div>
                     <div class="content-grid" id="contentGrid">
@@ -212,7 +211,7 @@
             <div id="calls" class="tab-content" role="tabpanel" aria-labelledby="tab-calls">
                 <div class="container">
                     <div class="calls-header">
-                        <h2>Private Video & Voice Calls</h2>
+                        <h2 data-i18n="calls.header">Private Video & Voice Calls</h2>
                         <div class="call-rates">
                             <div class="rate-info">
                                 <span class="rate-icon">📹</span>
@@ -230,7 +229,7 @@
                     </div>
 
                     <div class="webrtc-demo">
-                        <button id="startCall">Start Call</button>
+                        <button id="startCall" data-i18n="calls.start">Start Call</button>
                         <div id="videos">
                             <video id="localVideo" autoplay muted></video>
                             <video id="remoteVideo" autoplay></video>
@@ -243,8 +242,8 @@
             <div id="tokens" class="tab-content" role="tabpanel" aria-labelledby="tab-tokens">
                 <div class="container">
                     <div class="tokens-header">
-                        <h2>💎 Purchase Tokens</h2>
-                        <p class="tokens-subtitle">Unlock premium content and features with Feelynx tokens</p>
+                        <h2 data-i18n="tokens.header">💎 Purchase Tokens</h2>
+                        <p class="tokens-subtitle" data-i18n="tokens.subtitle">Unlock premium content and features with Feelynx tokens</p>
                     </div>
                     
                     <div class="token-packs" id="tokenPacks">
@@ -275,13 +274,13 @@
             <div id="groups" class="tab-content" role="tabpanel" aria-labelledby="tab-groups">
                 <div class="container">
                     <div class="groups-header">
-                        <h2>👥 Private Groups</h2>
-                        <p class="groups-subtitle">Join exclusive communities with 24hr expiring invites</p>
+                        <h2 data-i18n="groups.header">👥 Private Groups</h2>
+                        <p class="groups-subtitle" data-i18n="groups.subtitle">Join exclusive communities with 24hr expiring invites</p>
                     </div>
 
                     <!-- Group Announcements -->
                     <section class="group-announcements">
-                        <h3>📢 Group Announcements</h3>
+                        <h3 data-i18n="groups.announcements">📢 Group Announcements</h3>
                         <div class="announcements-grid" id="announcementsGrid">
                             <p class="no-js-fallback">Announcements loading...</p>
                         </div>
@@ -290,15 +289,15 @@
                     <!-- Create Group -->
                     <section class="create-group-section">
                         <div class="create-group-card">
-                            <h4>Create New Private Group</h4>
-                            <p>Build your exclusive community with 24hr expiring invites</p>
-                            <button class="btn btn--primary" id="createGroupBtn">Create Group</button>
+                            <h4 data-i18n="groups.createHeader">Create New Private Group</h4>
+                            <p data-i18n="groups.createDesc">Build your exclusive community with 24hr expiring invites</p>
+                            <button class="btn btn--primary" id="createGroupBtn" data-i18n="groups.createButton">Create Group</button>
                         </div>
                     </section>
 
                     <!-- Groups Grid -->
                     <section class="groups-section">
-                        <h3>Your Groups</h3>
+                        <h3 data-i18n="groups.yourGroups">Your Groups</h3>
                         <div class="groups-grid" id="groupsGrid">
                             <p class="no-js-fallback">No groups found...</p>
                         </div>
@@ -503,18 +502,11 @@
                     <p>👥 Maximum 50 members per group</p>
                     <p>🎭 Support multi-creator live shows</p>
                 </div>
-                <button id="createGroup" class="btn btn--primary btn--full-width">Create Group</button>
+                <button id="createGroup" class="btn btn--primary btn--full-width" data-i18n="groups.createButton">Create Group</button>
             </div>
         </div>
     </div>
 
-    <div id="google_translate_element" style="display:none"></div>
-    <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,pt'}, 'google_translate_element');
-        }
-    </script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="webrtc.js"></script>
     <script src="app.js"></script>
 </body>
