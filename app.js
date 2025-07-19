@@ -257,14 +257,140 @@ let selectedTipAmount = 0;
 let currentLanguage = 'en';
 let eyeTrackingEnabled = true;
 
+const translations = {
+    'en': {
+        'nav.explore': 'Explore',
+        'nav.creators': 'Creators',
+        'nav.content': 'Content',
+        'nav.calls': 'Calls',
+        'nav.tokens': 'Tokens',
+        'nav.groups': 'Groups',
+        'nav.dashboard': 'Dashboard',
+        'hero.title': 'Join the Hottest Creators Now',
+        'hero.subtitle': 'Connect with premium creators from around the world on Feelynx',
+        'live.now': '🔴 Live Now',
+        'section.featured': 'Featured Creators',
+        'section.today': "Today's Creators",
+        'section.weekly': 'Weekly Standouts',
+        'section.alltime': 'All-Time Favorites',
+        'creator.search.placeholder': 'Search creators by @username, country, or specialties...',
+        'filter.allCountries': '🌍 All Countries',
+        'filter.allAges': '👤 All Ages',
+        'filter.allSpecialties': '✨ All Specialties',
+        'filter.onlineOnly': 'Online Only',
+        'filter.toyConnected': 'Toy Connected',
+        'content.header': 'Premium Content Marketplace',
+        'content.filter.all': 'All Content',
+        'content.filter.photos': '📸 Photos',
+        'content.filter.videos': '🎥 Videos',
+        'content.filter.voice': '🎵 Voice',
+        'content.filter.bundles': '📦 Bundles',
+        'calls.header': 'Private Video & Voice Calls',
+        'calls.start': 'Start Call',
+        'tokens.header': '💎 Purchase Tokens',
+        'tokens.subtitle': 'Unlock premium content and features with Feelynx tokens',
+        'groups.header': '👥 Private Groups',
+        'groups.subtitle': 'Join exclusive communities with 24hr expiring invites',
+        'groups.announcements': '📢 Group Announcements',
+        'groups.createHeader': 'Create New Private Group',
+        'groups.createDesc': 'Build your exclusive community with 24hr expiring invites',
+        'groups.createButton': 'Create Group',
+        'groups.yourGroups': 'Your Groups'
+    },
+    'es': {
+        'nav.explore': 'Explorar',
+        'nav.creators': 'Creadores',
+        'nav.content': 'Contenido',
+        'nav.calls': 'Llamadas',
+        'nav.tokens': 'Tokens',
+        'nav.groups': 'Grupos',
+        'nav.dashboard': 'Panel',
+        'hero.title': 'Únete a los creadores más candentes ahora',
+        'hero.subtitle': 'Conecta con creadores premium de todo el mundo en Feelynx',
+        'live.now': '🔴 En directo',
+        'section.featured': 'Creadores Destacados',
+        'section.today': 'Creadores de Hoy',
+        'section.weekly': 'Lo Mejor de la Semana',
+        'section.alltime': 'Favoritos de Todos los Tiempos',
+        'creator.search.placeholder': 'Buscar creadores por @usuario, país o especialidades...',
+        'filter.allCountries': '🌍 Todos los Países',
+        'filter.allAges': '👤 Todas las Edades',
+        'filter.allSpecialties': '✨ Todas las Especialidades',
+        'filter.onlineOnly': 'Solo en Línea',
+        'filter.toyConnected': 'Juguete Conectado',
+        'content.header': 'Mercado de Contenido Premium',
+        'content.filter.all': 'Todo el Contenido',
+        'content.filter.photos': '📸 Fotos',
+        'content.filter.videos': '🎥 Videos',
+        'content.filter.voice': '🎵 Voz',
+        'content.filter.bundles': '📦 Paquetes',
+        'calls.header': 'Llamadas Privadas de Video y Voz',
+        'calls.start': 'Iniciar Llamada',
+        'tokens.header': '💎 Comprar Tokens',
+        'tokens.subtitle': 'Desbloquea contenido y funciones premium con tokens Feelynx',
+        'groups.header': '👥 Grupos Privados',
+        'groups.subtitle': 'Únete a comunidades exclusivas con invitaciones de 24h',
+        'groups.announcements': '📢 Anuncios del Grupo',
+        'groups.createHeader': 'Crear Nuevo Grupo Privado',
+        'groups.createDesc': 'Crea tu comunidad exclusiva con invitaciones de 24h',
+        'groups.createButton': 'Crear Grupo',
+        'groups.yourGroups': 'Tus Grupos'
+    },
+    'pt': {
+        'nav.explore': 'Explorar',
+        'nav.creators': 'Criadores',
+        'nav.content': 'Conteúdo',
+        'nav.calls': 'Chamadas',
+        'nav.tokens': 'Tokens',
+        'nav.groups': 'Grupos',
+        'nav.dashboard': 'Painel',
+        'hero.title': 'Junte-se aos criadores mais quentes agora',
+        'hero.subtitle': 'Conecte-se com criadores premium do mundo todo na Feelynx',
+        'live.now': '🔴 Ao Vivo',
+        'section.featured': 'Criadores em Destaque',
+        'section.today': 'Criadores de Hoje',
+        'section.weekly': 'Destaques da Semana',
+        'section.alltime': 'Favoritos de Todos os Tempos',
+        'creator.search.placeholder': 'Pesquisar criadores por @usuário, país ou especialidades...',
+        'filter.allCountries': '🌍 Todos os Países',
+        'filter.allAges': '👤 Todas as Idades',
+        'filter.allSpecialties': '✨ Todas as Especialidades',
+        'filter.onlineOnly': 'Somente Online',
+        'filter.toyConnected': 'Brinquedo Conectado',
+        'content.header': 'Mercado de Conteúdo Premium',
+        'content.filter.all': 'Todo o Conteúdo',
+        'content.filter.photos': '📸 Fotos',
+        'content.filter.videos': '🎥 Vídeos',
+        'content.filter.voice': '🎵 Voz',
+        'content.filter.bundles': '📦 Pacotes',
+        'calls.header': 'Chamadas Privadas de Vídeo e Voz',
+        'calls.start': 'Iniciar Chamada',
+        'tokens.header': '💎 Comprar Tokens',
+        'tokens.subtitle': 'Desbloqueie conteúdo e recursos premium com tokens Feelynx',
+        'groups.header': '👥 Grupos Privados',
+        'groups.subtitle': 'Junte-se a comunidades exclusivas com convites de 24h',
+        'groups.announcements': '📢 Anúncios do Grupo',
+        'groups.createHeader': 'Criar Novo Grupo Privado',
+        'groups.createDesc': 'Construa sua comunidade exclusiva com convites de 24h',
+        'groups.createButton': 'Criar Grupo',
+        'groups.yourGroups': 'Seus Grupos'
+    }
+};
+
 // Initialize the application - NO AGE VERIFICATION
 document.addEventListener('DOMContentLoaded', function() {
+    const savedLang = localStorage.getItem('feelynxLang');
+    if (savedLang) {
+        currentLanguage = savedLang;
+    }
+
     // Show main app immediately - no age verification
     initializeNavigation();
     initializeFilters();
     initializeModals();
     initializeLynxMascot();
     initializeLanguageSelector();
+    translateInterface();
     populateContent();
     initializeGroupsFeatures();
     startRealTimeUpdates();
@@ -410,67 +536,33 @@ function createSparkleTrail(element) {
 function initializeLanguageSelector() {
     const languageSelector = document.getElementById('languageSelector');
     if (languageSelector) {
+        languageSelector.value = currentLanguage;
         languageSelector.addEventListener('change', function() {
             translatePage(this.value);
         });
     }
 }
 
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
-}
-
 function translatePage(lang) {
-    const map = { 'en': '/en/en', 'es': '/en/es', 'pt': '/en/pt' };
-    setCookie('googtrans', map[lang] || '/en/en', 1);
     currentLanguage = lang;
+    localStorage.setItem('feelynxLang', lang);
     translateInterface();
-    location.reload();
 }
 
 function translateInterface() {
-    const translations = {
-        'en': {
-            'explore': 'Explore',
-            'creators': 'Creators',
-            'content': 'Content',
-            'calls': 'Calls',
-            'tokens': 'Tokens',
-            'groups': 'Groups',
-            'dashboard': 'Dashboard'
-        },
-        'es': {
-            'explore': 'Explorar',
-            'creators': 'Creadores',
-            'content': 'Contenido',
-            'calls': 'Llamadas',
-            'tokens': 'Tokens',
-            'groups': 'Grupos',
-            'dashboard': 'Panel'
-        },
-        'pt': {
-            'explore': 'Explorar',
-            'creators': 'Criadores',
-            'content': 'Conteúdo',
-            'calls': 'Chamadas',
-            'tokens': 'Tokens',
-            'groups': 'Grupos',
-            'dashboard': 'Painel'
-        }
-    };
-    
     const currentTranslations = translations[currentLanguage];
-    if (currentTranslations) {
-        document.querySelectorAll('.tab-text').forEach((element, index) => {
-            const keys = Object.keys(currentTranslations);
-            if (keys[index]) {
-                element.textContent = currentTranslations[keys[index]];
+    if (!currentTranslations) return;
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = currentTranslations[key];
+        if (translation) {
+            if (element.hasAttribute('placeholder')) {
+                element.placeholder = translation;
+            } else {
+                element.textContent = translation;
             }
-        });
-    }
+        }
+    });
 }
 
 // Animate Statistics Counters
