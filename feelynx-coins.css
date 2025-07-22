@@ -64,6 +64,11 @@ main {
   color: #ff6ec7;
   margin-bottom: 0.7rem;
 }
+.app-coins {
+  font-size: 0.98rem;
+  color: #e0d8ff;
+  margin-bottom: 0.4rem;
+}
 .web-extra {
   font-size: 0.98rem;
   color: #9ae3ff;
