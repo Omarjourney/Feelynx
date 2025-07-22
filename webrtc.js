@@ -29,6 +29,9 @@ async function createPeer() {
   };
   pc.ontrack = (event) => {
     remoteVideo.srcObject = event.streams[0];
+    if (window.lovense) {
+      window.lovense.vibrateToy();
+    }
   };
   if (localStream) {
     localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
@@ -36,6 +39,9 @@ async function createPeer() {
 }
 
 startBtn.addEventListener('click', async () => {
+  if (window.lovense) {
+    window.lovense.connectLovense();
+  }
   localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
   localVideo.srcObject = localStream;
   await createPeer();
