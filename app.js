@@ -112,86 +112,69 @@ const appData = {
   ],
   "tokenPacks": [
     {
-      "name": "Micro Pack",
-      "tokens": 20,
-      "price": 1.99,
-      "bonus": "Try it out!",
-      "popular": false
-    },
-    {
-      "name": "Small Pack",
-      "tokens": 50,
-      "price": 4.99,
-      "bonus": "5% chance to double tokens",
-      "popular": false
-    },
-    {
       "name": "Starter Pack",
-      "tokens": 100,
-      "price": 9.99,
-      "bonus": "10% chance for 2× bonus",
+      "tokens": 75,
+      "price": 0.99,
+      "bonus": "Great for newbies",
       "popular": false
     },
     {
-      "name": "Popular Pack",
-      "tokens": 500,
-      "price": 39.99,
-      "bonus": "1 in 5 gets VIP access",
+      "name": "Bronze Pack",
+      "tokens": 400,
+      "price": 4.99,
+      "bonus": "Save 5%",
+      "popular": false
+    },
+    {
+      "name": "Silver Pack",
+      "tokens": 900,
+      "price": 9.99,
+      "bonus": "Popular choice",
       "popular": true
     },
     {
-      "name": "VIP Pack",
-      "tokens": 1000,
-      "price": 69.99,
-      "bonus": "Guaranteed Mystery Reward",
+      "name": "Gold Pack",
+      "tokens": 1500,
+      "price": 15.99,
+      "bonus": "Big bonus",
       "popular": false
     },
     {
-      "name": "High Roller Pack",
-      "tokens": 2500,
+      "name": "Platinum Pack",
+      "tokens": 2000,
+      "price": 19.99,
+      "bonus": "Extra value",
+      "popular": false
+    },
+    {
+      "name": "Diamond Pack",
+      "tokens": 2600,
+      "price": 24.99,
+      "bonus": "Top pick",
+      "popular": false
+    },
+    {
+      "name": "Big Baller Pack",
+      "tokens": 5300,
+      "price": 49.99,
+      "bonus": "Best savings",
+      "popular": false
+    },
+    {
+      "name": "Whale Pack",
+      "tokens": 11000,
+      "price": 99.99,
+      "bonus": "Mega value",
+      "popular": false
+    },
+    {
+      "name": "Ultra Whale Pack",
+      "tokens": 14624,
       "price": 149.99,
-      "bonus": "3 Mystery Boxes + Exclusive Badge",
+      "bonus": "Ultimate deal",
       "popular": false
     }
   ],
-  "groups": [
-    {
-      "id": 1,
-      "name": "VIP Exclusive",
-      "members": 89,
-      "isPrivate": true,
-      "announcements": [
-        {
-          "title": "Live Show Tonight!",
-          "content": "Join ArianaVex and MilaFox for a special collaborative show at 9PM EST",
-          "timestamp": "2 hours ago",
-          "type": "live_show"
-        }
-      ],
-      "activeShows": 1,
-      "inviteExpiry": "23h 45m",
-      "theme": "luxury"
-    },
-    {
-      "id": 2,
-      "name": "Gaming Queens",
-      "members": 156,
-      "isPrivate": true,
-      "announcements": [
-        {
-          "title": "New Content Alert",
-          "content": "SkylarNova just uploaded exclusive gaming cosplay content",
-          "timestamp": "4 hours ago",
-          "type": "content"
-        }
-      ],
-      "activeShows": 0,
-      "inviteExpiry": "12h 30m",
-      "theme": "gaming"
-    }
-  ],
-  "content": [
-    {
       "id": 1,
       "title": "Exclusive Photo Set",
       "creator": "ArianaVex",
@@ -263,7 +246,7 @@ const translations = {
         'nav.creators': 'Creators',
         'nav.content': 'Content',
         'nav.calls': 'Calls',
-        'nav.tokens': 'Tokens',
+        'nav.tokens': 'VibeCoins',
         'nav.groups': 'Groups',
         'nav.dashboard': 'Dashboard',
         'hero.title': 'Join the Hottest Creators Now',
@@ -287,8 +270,8 @@ const translations = {
         'content.filter.bundles': '📦 Bundles',
         'calls.header': 'Private Video & Voice Calls',
         'calls.start': 'Start Call',
-        'tokens.header': '💎 Purchase Tokens',
-        'tokens.subtitle': 'Unlock premium content and features with Feelynx tokens',
+        'tokens.header': '💎 Purchase VibeCoins',
+        'tokens.subtitle': 'Unlock premium content and features with VibeCoins',
         'groups.header': '👥 Private Groups',
         'groups.subtitle': 'Join exclusive communities with 24hr expiring invites',
         'groups.announcements': '📢 Group Announcements',
@@ -302,7 +285,7 @@ const translations = {
         'nav.creators': 'Creadores',
         'nav.content': 'Contenido',
         'nav.calls': 'Llamadas',
-        'nav.tokens': 'Tokens',
+        'nav.tokens': 'VibeCoins',
         'nav.groups': 'Grupos',
         'nav.dashboard': 'Panel',
         'hero.title': 'Únete a los creadores más candentes ahora',
@@ -326,8 +309,8 @@ const translations = {
         'content.filter.bundles': '📦 Paquetes',
         'calls.header': 'Llamadas Privadas de Video y Voz',
         'calls.start': 'Iniciar Llamada',
-        'tokens.header': '💎 Comprar Tokens',
-        'tokens.subtitle': 'Desbloquea contenido y funciones premium con tokens Feelynx',
+        'tokens.header': '💎 Comprar VibeCoins',
+        'tokens.subtitle': 'Desbloquea contenido y funciones premium con VibeCoins',
         'groups.header': '👥 Grupos Privados',
         'groups.subtitle': 'Únete a comunidades exclusivas con invitaciones de 24h',
         'groups.announcements': '📢 Anuncios del Grupo',
@@ -341,7 +324,7 @@ const translations = {
         'nav.creators': 'Criadores',
         'nav.content': 'Conteúdo',
         'nav.calls': 'Chamadas',
-        'nav.tokens': 'Tokens',
+        'nav.tokens': 'VibeCoins',
         'nav.groups': 'Grupos',
         'nav.dashboard': 'Painel',
         'hero.title': 'Junte-se aos criadores mais quentes agora',
@@ -365,8 +348,8 @@ const translations = {
         'content.filter.bundles': '📦 Pacotes',
         'calls.header': 'Chamadas Privadas de Vídeo e Voz',
         'calls.start': 'Iniciar Chamada',
-        'tokens.header': '💎 Comprar Tokens',
-        'tokens.subtitle': 'Desbloqueie conteúdo e recursos premium com tokens Feelynx',
+        'tokens.header': '💎 Comprar VibeCoins',
+        'tokens.subtitle': 'Desbloqueie conteúdo e recursos premium com VibeCoins',
         'groups.header': '👥 Grupos Privados',
         'groups.subtitle': 'Junte-se a comunidades exclusivas com convites de 24h',
         'groups.announcements': '📢 Anúncios do Grupo',
@@ -999,7 +982,7 @@ function renderContentGrid() {
                 <h4>${content.title}</h4>
                 <p>by ${content.creator}</p>
                 <div class="content-pricing">
-                    <span class="price token-price">${content.tokenPrice} tokens</span>
+                    <span class="price token-price">${content.tokenPrice} VibeCoins</span>
                     <span class="price usd-price">$${content.usdPrice}</span>
                 </div>
                 <div class="content-stats">
@@ -1073,11 +1056,11 @@ function renderCallCreators() {
             <div class="call-rates">
                 <div class="rate-option">
                     <span class="rate-type">📹 Video</span>
-                    <span class="call-rate">${creator.videoRate} tokens/min</span>
+                    <span class="call-rate">${creator.videoRate} VibeCoins/min</span>
                 </div>
                 <div class="rate-option">
                     <span class="rate-type">🎵 Voice</span>
-                    <span class="call-rate">${creator.voiceRate} tokens/min</span>
+                    <span class="call-rate">${creator.voiceRate} VibeCoins/min</span>
                 </div>
             </div>
             <div class="call-actions">
@@ -1108,7 +1091,7 @@ function renderTokenPacks() {
     container.innerHTML = appData.tokenPacks.map((pack, index) => `
         <div class="token-pack ${pack.popular ? 'popular' : ''}" onclick="purchaseTokens('${pack.name}', ${pack.price}, ${pack.tokens})">
             <div class="token-amount">${pack.tokens}</div>
-            <div class="token-currency">TOKENS</div>
+            <div class="token-currency">VibeCoins</div>
             <div class="token-price">$${pack.price}</div>
             <div class="token-bonus">${pack.bonus}</div>
             <div class="mystery-meter">
@@ -1116,7 +1099,7 @@ function renderTokenPacks() {
                 <span class="meter-label">Mystery Bonus</span>
             </div>
             <button class="btn btn--primary btn--full-width purchase-btn">
-                💎 Purchase Tokens
+                💎 Purchase VibeCoins
             </button>
         </div>
     `).join('');
@@ -1664,8 +1647,8 @@ function purchaseTokens(packName, price, tokens) {
         
         setTimeout(() => {
             showSuccessModal(
-                '🎉 Tokens Purchased!',
-                `You've successfully purchased ${tokens} tokens for $${price}!\n\n🎁 ${pack.bonus}\n\nTokens have been added to your account!`
+                '🎉 VibeCoins Purchased!',
+                `You've successfully purchased ${tokens} VibeCoins for $${price}!\n\n🎁 ${pack.bonus}\n\nVibeCoins have been added to your account!`
             );
         }, 500);
     }, 1000);
@@ -1680,7 +1663,7 @@ function initiateCall(username, type) {
     
     showSuccessModal(
         `${callType} Call Requested!`,
-        `Your ${type} call request with ${username} has been sent.\n\nRate: ${rate} tokens/min\nThey will respond within 5 minutes.`
+        `Your ${type} call request with ${username} has been sent.\n\nRate: ${rate} VibeCoins/min\nThey will respond within 5 minutes.`
     );
 }
 
@@ -1693,8 +1676,8 @@ function viewContent(contentId) {
             <p><strong>Creator:</strong> ${content.creator}</p>
             <div class="pricing-options">
                 <div class="price-option">
-                    <span class="price-label">Token Price:</span>
-                    <span class="price-value">${content.tokenPrice} tokens</span>
+                    <span class="price-label">VibeCoin Price:</span>
+                    <span class="price-value">${content.tokenPrice} VibeCoins</span>
                 </div>
                 <div class="price-option">
                     <span class="price-label">USD Price:</span>
@@ -1704,7 +1687,7 @@ function viewContent(contentId) {
             <p class="sales-info">📊 ${content.sales} people have purchased this content</p>
             <div class="purchase-actions">
                 <button class="btn btn--primary" onclick="purchaseContent('${contentId}', 'token')">
-                    💎 Buy with Tokens
+                    💎 Buy with VibeCoins
                 </button>
                 <button class="btn btn--outline" onclick="purchaseContent('${contentId}', 'usd')">
                     💳 Buy with USD
@@ -1718,7 +1701,7 @@ function purchaseContent(contentId, method) {
     const content = appData.content.find(c => c.id == contentId);
     if (!content) return;
     
-    const price = method === 'token' ? `${content.tokenPrice} tokens` : `$${content.usdPrice}`;
+    const price = method === 'token' ? `${content.tokenPrice} VibeCoins` : `$${content.usdPrice}`;
     
     createSparkleEffect(document.body);
     showSuccessModal(
@@ -1862,7 +1845,7 @@ function showAchievementDetails(trophy) {
             <div class="achievement-rewards">
                 <h4>Rewards Unlocked:</h4>
                 <ul>
-                    <li>💎 500 bonus tokens</li>
+                    <li>💎 500 bonus VibeCoins</li>
                     <li>⭐ Exclusive badge</li>
                     <li>🎨 Custom emoji set</li>
                 </ul>
