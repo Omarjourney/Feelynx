@@ -20,3 +20,11 @@ The demo uses a basic WebSocket signaling server and `RTCPeerConnection` with Go
 ## Lovense Integration
 
 `lovense.js` demonstrates a minimal connection to the local **Lovense Connect** API. When a call starts, the script attempts to discover any paired toys on `http://localhost:30010` and triggers a short vibration once the remote stream is received. Ensure the Lovense Connect app is running for the demo to work.
+
+## Purchasing Vibecoins
+
+Token packs can be previewed through the `feelynx-coins.html` page located in
+the project root. Open this file directly in your browser (e.g.
+`file:///path/to/feelynx-coins.html`) or, if you are serving the repository with
+a local web server, navigate to `/feelynx-coins.html`. The page lists available
+coin bundles and acts as a prototype checkout screen.
