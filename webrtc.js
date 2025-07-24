@@ -1,6 +1,6 @@
-const localVideo = document.getElementById('localVideo');
+let localVideo = document.getElementById('localVideo') || document.getElementById('broadcastVideo');
 const remoteVideo = document.getElementById('remoteVideo');
-const startBtn = document.getElementById('startCall');
+const startButtons = Array.from(document.querySelectorAll('#startCall, #startBroadcast'));
 const ws = new WebSocket('ws://localhost:8080');
 let pc;
 let localStream;
@@ -39,7 +39,9 @@ async function createPeer() {
   };
   // When a remote track arrives, display it and trigger the Lovense device
   pc.ontrack = (event) => {
-    remoteVideo.srcObject = event.streams[0];
+    if (remoteVideo) {
+      remoteVideo.srcObject = event.streams[0];
+    }
     // Kick off a vibration if the Lovense integration is available
     if (window.lovense) {
       // call vibrateToy and handle any errors
@@ -53,8 +55,9 @@ async function createPeer() {
   }
 }
 
-// Handle click on the "Start Call" button: acquire media, connect Lovense, and start offer
-startBtn.addEventListener('click', async () => {
+// Handle click on any "Start" button
+startButtons.forEach(btn => btn.addEventListener('click', async () => {
+  localVideo = document.getElementById('localVideo') || document.getElementById('broadcastVideo');
   // Connect to Lovense first if available
   if (window.lovense) {
     try {
@@ -71,4 +74,4 @@ startBtn.addEventListener('click', async () => {
   const offer = await pc.createOffer();
   await pc.setLocalDescription(offer);
   ws.send(JSON.stringify({ offer }));
-});
+}));

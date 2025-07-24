@@ -249,6 +249,7 @@ const translations = {
         'nav.tokens': 'VibeCoins',
         'nav.groups': 'Groups',
         'nav.dashboard': 'Dashboard',
+        'nav.golive': 'Go Live',
         'hero.title': 'Join the Hottest Creators Now',
         'hero.subtitle': 'Connect with premium creators from around the world on Feelynx',
         'live.now': '🔴 Live Now',
@@ -270,6 +271,7 @@ const translations = {
         'content.filter.bundles': '📦 Bundles',
         'calls.header': 'Private Video & Voice Calls',
         'calls.start': 'Start Call',
+        'golive.start': 'Start Broadcast',
         'tokens.header': '💎 Purchase VibeCoins',
         'tokens.subtitle': 'Unlock premium content and features with VibeCoins',
         'groups.header': '👥 Private Groups',
@@ -288,6 +290,7 @@ const translations = {
         'nav.tokens': 'VibeCoins',
         'nav.groups': 'Grupos',
         'nav.dashboard': 'Panel',
+        'nav.golive': 'Go Live',
         'hero.title': 'Únete a los creadores más candentes ahora',
         'hero.subtitle': 'Conecta con creadores premium de todo el mundo en Feelynx',
         'live.now': '🔴 En directo',
@@ -309,6 +312,7 @@ const translations = {
         'content.filter.bundles': '📦 Paquetes',
         'calls.header': 'Llamadas Privadas de Video y Voz',
         'calls.start': 'Iniciar Llamada',
+        'golive.start': 'Iniciar Transmisión',
         'tokens.header': '💎 Comprar VibeCoins',
         'tokens.subtitle': 'Desbloquea contenido y funciones premium con VibeCoins',
         'groups.header': '👥 Grupos Privados',
@@ -327,6 +331,7 @@ const translations = {
         'nav.tokens': 'VibeCoins',
         'nav.groups': 'Grupos',
         'nav.dashboard': 'Painel',
+        'nav.golive': 'Go Live',
         'hero.title': 'Junte-se aos criadores mais quentes agora',
         'hero.subtitle': 'Conecte-se com criadores premium do mundo todo na Feelynx',
         'live.now': '🔴 Ao Vivo',
@@ -348,6 +353,7 @@ const translations = {
         'content.filter.bundles': '📦 Pacotes',
         'calls.header': 'Chamadas Privadas de Vídeo e Voz',
         'calls.start': 'Iniciar Chamada',
+        'golive.start': 'Iniciar Transmissão',
         'tokens.header': '💎 Comprar VibeCoins',
         'tokens.subtitle': 'Desbloqueie conteúdo e recursos premium com VibeCoins',
         'groups.header': '👥 Grupos Privados',
@@ -651,6 +657,9 @@ function loadTabContent(tab) {
             break;
         case 'dashboard':
             renderDashboard();
+            break;
+        case 'golive':
+            renderGoLive();
             break;
     }
 }
@@ -1210,6 +1219,29 @@ function renderDashboard() {
     render3DAnalytics();
     renderTrophyRoom();
     setupGeoBlocking();
+}
+
+function renderGoLive() {
+    const container = document.getElementById('golive');
+    if (!container) return;
+
+    // Nothing dynamic yet - just ensure the broadcast button works
+    const startBtn = document.getElementById('startBroadcast');
+    const videoEl = document.getElementById('broadcastVideo');
+
+    if (startBtn && videoEl) {
+        startBtn.onclick = async () => {
+            try {
+                if (window.lovense) {
+                    await window.lovense.connectLovense();
+                }
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                videoEl.srcObject = stream;
+            } catch (err) {
+                console.error('Broadcast start failed:', err);
+            }
+        };
+    }
 }
 
 function render3DAnalytics() {

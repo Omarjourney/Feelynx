@@ -47,10 +47,10 @@
                         <span class="tab-icon">📊</span>
                         <span class="tab-text" data-i18n="nav.dashboard">Dashboard</span>
                     </button>
-                            <button id="tab-golive" role="tab" aria-controls="golive" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="golive">
-      <span class="tab-icon"></span>
-      <span class="tab-text" data-i18n="nav.golive">Go Live</span>
-    </bu>tton>>
+                    <button id="tab-golive" role="tab" aria-controls="golive" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="golive">
+                        <span class="tab-icon"></span>
+                        <span class="tab-text" data-i18n="nav.golive">Go Live</span>
+                    </button>
                 </div>
                 <div class="nav-language">
                     <select id="languageSelector" class="language-select">
@@ -434,6 +434,20 @@
                             <button id="saveGeoBlocking" class="btn btn--primary">Save Geo Settings</button>
                         </div>
                     </section>
+                </div>
+            </div>
+
+            <!-- Go Live Tab -->
+            <div id="golive" class="tab-content" role="tabpanel" aria-labelledby="tab-golive">
+                <div class="container">
+                    <h2>Go Live</h2>
+                    <p>Test your camera and microphone before broadcasting.</p>
+                    <div class="webrtc-demo">
+                        <button id="startBroadcast" data-i18n="golive.start">Start Broadcast</button>
+                        <div id="broadcastArea">
+                            <video id="broadcastVideo" autoplay muted></video>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
