@@ -1087,13 +1087,15 @@ function renderCallCreators() {
 function renderTokenPacks() {
     const container = document.getElementById('tokenPacks');
     if (!container) return;
-    
-    container.innerHTML = appData.tokenPacks.map((pack, index) => `
-        <div class="token-pack ${pack.popular ? 'popular' : ''}" onclick="purchaseTokens('${pack.name}', ${pack.price}, ${pack.tokens})">
-            <div class="token-amount">${pack.tokens}</div>
+
+    const packs = typeof coinPackages !== 'undefined' ? coinPackages : appData.tokenPacks;
+
+    container.innerHTML = packs.map((pack) => `
+        <div class="token-pack ${pack.popular ? 'popular' : ''}" onclick="purchaseTokens('${pack.name}', ${pack.price}, ${pack.appTokens || pack.tokens})">
+            <div class="token-amount">${pack.appTokens || pack.tokens}</div>
             <div class="token-currency">VibeCoins</div>
             <div class="token-price">$${pack.price}</div>
-            <div class="token-bonus">${pack.bonus}</div>
+            <div class="token-bonus">${pack.bonusPercent !== undefined ? `Get <strong>+${pack.bonusPercent}% more</strong> on Feelynx.live (${pack.webTokens} total)` : pack.bonus}</div>
             <div class="mystery-meter">
                 <div class="meter-fill" style="width: ${Math.random() * 100}%"></div>
                 <span class="meter-label">Mystery Bonus</span>
@@ -1633,7 +1635,8 @@ function showLoadingAnimation() {
 
 // Action Functions
 function purchaseTokens(packName, price, tokens) {
-    const pack = appData.tokenPacks.find(p => p.name === packName);
+    const source = typeof coinPackages !== 'undefined' ? coinPackages : appData.tokenPacks;
+    const pack = source.find(p => p.name === packName);
     if (!pack) return;
     
     createSparkleEffect(event.target.closest('.token-pack'));
@@ -1648,7 +1651,7 @@ function purchaseTokens(packName, price, tokens) {
         setTimeout(() => {
             showSuccessModal(
                 '🎉 VibeCoins Purchased!',
-                `You've successfully purchased ${tokens} VibeCoins for $${price}!\n\n🎁 ${pack.bonus}\n\nVibeCoins have been added to your account!`
+                `You've successfully purchased ${tokens} VibeCoins for $${price}!`
             );
         }, 500);
     }, 1000);
