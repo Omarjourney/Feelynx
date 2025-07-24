@@ -80,82 +80,24 @@
       </div>
     </section>
     <section aria-label="Coin Packages">
-      <div class="coins-packages-container">
-        <!-- All 9 packs, 3x3 grid, responsive -->
-        <div class="coins-card">
-          <div class="pack-name">Starter Pack</div>
-          <div class="pack-price">$0.99</div>
-          <div class="pack-coins">75 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">50 coins in app</div>
-          <span class="web-extra">+50% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Bronze Pack</div>
-          <div class="pack-price">$4.99</div>
-          <div class="pack-coins">400 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">276 coins in app</div>
-          <span class="web-extra">+45% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Silver Pack</div>
-          <div class="pack-price">$9.99</div>
-          <div class="pack-coins">900 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">652 coins in app</div>
-          <span class="web-extra">+38% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Gold Pack</div>
-          <div class="pack-price">$15.99</div>
-          <div class="pack-coins">1,500 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">1,103 coins in app</div>
-          <span class="web-extra">+36% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Platinum Pack</div>
-          <div class="pack-price">$19.99</div>
-          <div class="pack-coins">2,000 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">1,399 coins in app</div>
-          <span class="web-extra">+43% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Diamond Pack</div>
-          <div class="pack-price">$24.99</div>
-          <div class="pack-coins">2,600 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">1,806 coins in app</div>
-          <span class="web-extra">+44% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Big Baller Pack</div>
-          <div class="pack-price">$49.99</div>
-          <div class="pack-coins">5,300 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">3,759 coins in app</div>
-          <span class="web-extra">+41% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Whale Pack</div>
-          <div class="pack-price">$99.99</div>
-          <div class="pack-coins">11,000 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">7,801 coins in app</div>
-          <span class="web-extra">+41% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-        <div class="coins-card">
-          <div class="pack-name">Ultra Whale Pack</div>
-          <div class="pack-price">$149.99</div>
-          <div class="pack-coins">14,624 <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
-          <div class="app-coins">10,446 coins in app</div>
-          <span class="web-extra">+40% More On Web</span>
-          <button class="buy-coins-btn">Buy Now</button>
-        </div>
-      </div>
+      <div class="coins-packages-container" id="coinPackages"></div>
     </section>
   </main>
+  <script src="coinPackages.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('coinPackages');
+      container.innerHTML = coinPackages.map(pack => `
+        <div class="coins-card">
+          <div class="pack-name">${pack.name}</div>
+          <div class="pack-price">$${pack.price}</div>
+          <div class="pack-coins">${pack.webTokens} <span class="icon-coin" aria-label="coins" role="img">🪙</span></div>
+          <div class="app-coins">${pack.appTokens} coins in app</div>
+          <span class="web-extra">+${pack.bonusPercent}% More On Web</span>
+          <button class="buy-coins-btn">Buy Now</button>
+        </div>
+      `).join('');
+    });
+  </script>
 </body>
 </html>
