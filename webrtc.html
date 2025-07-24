@@ -2,21 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Feelynx WebRTC Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    video { width: 45%; margin: 5px; background: #000; }
-    #videos { display: flex; justify-content: center; margin-top: 20px; }
-    #startCall { display: block; margin: 20px auto; padding: 10px 20px; }
-  </style>
 </head>
 <body>
-  <h1 style="text-align:center">WebRTC Demo</h1>
-  <button id="startCall">Start Call</button>
-  <div id="videos">
-    <video id="localVideo" autoplay muted></video>
-    <video id="remoteVideo" autoplay></video>
+  <div class="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center py-8">
+    <h1 class="text-3xl font-bold mb-6 text-pink-400">WebRTC Demo</h1>
+
+    <!-- Call state indicator -->
+    <p id="callState" class="mb-1">Waiting</p>
+    <div class="mb-4 text-xl" id="vibeStatusIcon" title="Toy status">💜</div>
+
+    <!-- Videos -->
+    <div id="videos" class="flex flex-wrap justify-center space-x-2 mb-4">
+      <video id="localVideo" class="bg-black rounded w-64 md:w-80" autoplay muted></video>
+      <video id="remoteVideo" class="bg-black rounded w-64 md:w-80" autoplay></video>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex space-x-3">
+      <button id="startCall" class="px-4 py-2 bg-pink-600 rounded text-white hover:bg-pink-500">Start Call</button>
+      <button id="muteButton" class="px-4 py-2 bg-purple-600 rounded text-white hidden" title="Mute/unmute audio">Mute</button>
+      <button id="endCall" class="px-4 py-2 bg-gray-700 rounded text-white hidden" title="End call">End</button>
+    </div>
   </div>
+
+  <!-- Onboarding Modal -->
+  <div id="permissionModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+    <div class="bg-gray-800 p-6 rounded text-center">
+      <p class="mb-4">Allow camera and microphone access to start the call.</p>
+      <button id="allowPermissions" class="px-4 py-2 bg-pink-600 rounded text-white mr-2">Allow</button>
+      <button id="denyPermissions" class="px-4 py-2 bg-gray-700 rounded text-white">Cancel</button>
+    </div>
+  </div>
+
   <script src="lovense.js"></script>
   <script src="webrtc.js"></script>
 </body>
