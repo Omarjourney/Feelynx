@@ -4,10 +4,22 @@ const path = require('path');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const session = require('express-session');
+
+const authRoutes = require('./routes/authRoutes');
+const verificationRoutes = require('./routes/verificationRoutes');
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
+app.use(express.json());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'change_this_secret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
@@ -15,6 +27,9 @@ app.use(limiter);
 app.get('/health', (req, res) => {
   res.send('ok');
 });
+
+app.use('/api', authRoutes);
+app.use('/api', verificationRoutes);
 
 // Serve static files from the project root so index.html works out of the box
 app.use(express.static(path.join(__dirname)));
