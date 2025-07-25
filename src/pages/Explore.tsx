@@ -3,7 +3,7 @@ import StreamCard from '../components/StreamCard';
 
 const mockStreams = [
   { id: 1, username: 'creator1', viewers: 340, avatar: 'https://placekitten.com/200/200', featured: true },
-  { id: 2, username: 'creator2', viewers: 120, avatar: 'https://placekitten.com/201/200', featured: false },
+  { id: 2, username: 'creator2', viewers: 120, avatar: 'https://placekitten.com/201/200', featured: false, isNew: true },
   { id: 3, username: 'creator3', viewers: 999, avatar: 'https://placekitten.com/202/200', featured: true },
 ];
 
