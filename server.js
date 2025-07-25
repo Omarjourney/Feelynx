@@ -4,6 +4,7 @@ const path = require('path');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const { AccessToken } = require('livekit-server-sdk');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -14,6 +15,18 @@ app.use(limiter);
 
 app.get('/health', (req, res) => {
   res.send('ok');
+});
+
+app.get('/livekit-token', (req, res) => {
+  const identity = req.query.identity || 'anonymous';
+  const room = req.query.room || 'feelynx';
+  const at = new AccessToken(
+    process.env.LIVEKIT_API_KEY,
+    process.env.LIVEKIT_API_SECRET,
+    { identity }
+  );
+  at.addGrant({ room, roomJoin: true });
+  res.json({ token: at.toJwt() });
 });
 
 // Serve static files from the project root so index.html works out of the box
