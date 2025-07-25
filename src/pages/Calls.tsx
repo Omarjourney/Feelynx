@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CallCard from '../components/CallCard';
-import CallInterface from '../components/CallInterface';
+import CallSession from '../components/CallSession';
 
 const mockCallCreators = [
   { id: 1, username: 'creator1', avatar: 'https://placekitten.com/220/200', rate: 2.5 },
@@ -21,9 +21,9 @@ const Calls: React.FC = () => {
         ))}
       </div>
       {active && (
-        <CallInterface
-          creator={active}
-          rate={active.rate}
+        <CallSession
+          creatorName={active.username}
+          ratePerMinute={active.rate}
           onEnd={() => setActive(null)}
         />
       )}
