@@ -1,9 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const WebSocket = require('ws');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const port = process.env.PORT || 8080;
 const app = express();
+app.use(helmet());
+
+const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
+app.use(limiter);
+
+app.get('/health', (req, res) => {
+  res.send('ok');
+});
 
 // Serve static files from the project root so index.html works out of the box
 app.use(express.static(path.join(__dirname)));

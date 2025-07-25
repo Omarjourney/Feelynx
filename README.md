@@ -28,3 +28,17 @@ the project root. Open this file directly in your browser (e.g.
 `file:///path/to/feelynx-coins.html`) or, if you are serving the repository with
 a local web server, navigate to `/feelynx-coins.html`. The page lists available
 coin bundles and acts as a prototype checkout screen.
+
+## Production Configuration
+
+The server uses environment variables loaded from a `.env` file. For a
+production deployment, ensure that `PORT` is set and any Firebase credentials
+are provided. The server now applies basic security headers with `helmet` and
+rate limiting via `express-rate-limit`. A simple health check endpoint is
+available at `/health`.
+
+Run the server in production mode with:
+
+```bash
+NODE_ENV=production npm start
+```
