@@ -26,7 +26,14 @@ const LivePage: React.FC = () => {
           </button>
         </div>
       </div>
-      <TipModal open={showTip} onClose={() => setShowTip(false)} />
+      <TipModal
+        isOpen={showTip}
+        onClose={() => setShowTip(false)}
+        onSubmit={(amt) => {
+          console.log('tip', amt);
+          setShowTip(false);
+        }}
+      />
     </div>
   );
 };

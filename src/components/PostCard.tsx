@@ -38,7 +38,14 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => {
           Tip
         </button>
       </div>
-      <TipModal open={showTip} onClose={() => setShowTip(false)} />
+      <TipModal
+        isOpen={showTip}
+        onClose={() => setShowTip(false)}
+        onSubmit={(amt) => {
+          console.log('tip', amt);
+          setShowTip(false);
+        }}
+      />
     </div>
   );
 };

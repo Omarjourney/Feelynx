@@ -2,8 +2,22 @@ import React, { useState } from 'react';
 import GroupCard from '../components/GroupCard';
 
 const mockGroups = [
-  { id: 1, name: 'Fans Club', members: 1200, thumbnail: 'https://placekitten.com/230/200', live: true },
-  { id: 2, name: 'VIP Room', members: 300, thumbnail: 'https://placekitten.com/231/200', live: false },
+  {
+    id: 1,
+    name: 'Fans Club',
+    members: 1200,
+    thumbnail: 'https://placekitten.com/230/200',
+    live: true,
+    description: 'Exclusive updates and streams',
+  },
+  {
+    id: 2,
+    name: 'VIP Room',
+    members: 300,
+    thumbnail: 'https://placekitten.com/231/200',
+    live: false,
+    description: 'Behind the scenes content',
+  },
 ];
 
 const Groups: React.FC = () => {
