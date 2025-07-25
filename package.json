@@ -20,7 +20,8 @@
     "ws": "^8.18.3",
     "dotenv": "^16.4.5",
     "helmet": "^7.0.0",
-    "express-rate-limit": "^7.0.0"
+    "express-rate-limit": "^7.0.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
