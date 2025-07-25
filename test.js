@@ -1,17 +1,17 @@
-let PrismaClient;
-try {
-  ({ PrismaClient } = require('@prisma/client'));
-} catch (e) {
-  ({ PrismaClient } = require('./prisma_client_stub'));
+require('dotenv').config();
+const { execSync } = require('child_process');
+const { PrismaClient } = require('@prisma/client');
+
+async function runMigrations() {
+  execSync('npx prisma migrate deploy', { stdio: 'inherit' });
 }
-const prisma = new PrismaClient();
 
 async function main() {
-  // Simple test: count users
+  await runMigrations();
+  const prisma = new PrismaClient();
   const users = await prisma.user.findMany();
   console.log('Users:', users);
+  await prisma.$disconnect();
 }
 
-main()
-  .catch((e) => console.error(e))
-  .finally(() => prisma.$disconnect());
+main().catch((e) => console.error(e));
