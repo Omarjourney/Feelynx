@@ -46,7 +46,8 @@ async function connectLiveKit() {
   const identity = `user-${Math.floor(Math.random() * 1000)}`;
   const resp = await fetch(`/livekit-token?identity=${identity}`);
   const data = await resp.json();
-  livekitRoom = await LivekitClient.connect(livekitUrl, data.token);
+  const url = livekitUrl || data.url;
+  livekitRoom = await LivekitClient.connect(url, data.token);
   const tracks = await LivekitClient.createLocalTracks({ audio: true, video: true });
   tracks.forEach((track) => {
     livekitRoom.localParticipant.publishTrack(track);

@@ -18,6 +18,9 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/livekit-token', (req, res) => {
+  if (!process.env.LIVEKIT_API_KEY || !process.env.LIVEKIT_API_SECRET) {
+    return res.status(500).json({ error: 'LiveKit not configured' });
+  }
   const identity = req.query.identity || 'anonymous';
   const room = req.query.room || 'feelynx';
   const at = new AccessToken(
@@ -26,7 +29,14 @@ app.get('/livekit-token', (req, res) => {
     { identity }
   );
   at.addGrant({ room, roomJoin: true });
-  res.json({ token: at.toJwt() });
+  res.json({ token: at.toJwt(), url: process.env.LIVEKIT_URL || '' });
+});
+
+app.get('/config.js', (req, res) => {
+  res.type('application/javascript');
+  res.send(
+    `window.LIVEKIT_URL = ${JSON.stringify(process.env.LIVEKIT_URL || '')};\n`
+  );
 });
 
 // Serve static files from the project root so index.html works out of the box
