@@ -43,3 +43,14 @@ Run the server in production mode with:
 ```bash
 NODE_ENV=production npm start
 ```
+
+## Database Setup
+
+Prisma is used for the database layer. Copy `.env.example` to `.env` and update
+`DATABASE_URL` if needed. Then run the initial migration and optionally seed the
+database:
+
+```bash
+npx prisma migrate dev --name init
+npx prisma db seed # optional
+```
