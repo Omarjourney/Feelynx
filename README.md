@@ -18,6 +18,25 @@ This repository contains a prototype of the Feelynx platform. A simple WebRTC de
 
 The demo uses a basic WebSocket signaling server and `RTCPeerConnection` with Google's public STUN server. The `Calls` tab on the main site now embeds the same WebRTC demo.
 
+## LiveKit Setup
+
+For a more fully featured experience you can run the project against [LiveKit](https://github.com/livekit/livekit), an open source WebRTC SFU. A minimal configuration file is provided as `livekit.yaml`.
+
+1. Start LiveKit via Docker:
+
+   ```bash
+   ./scripts/start_livekit.sh
+   ```
+
+   Alternatively install the binary with `curl -sL https://get.livekit.io | bash` and run:
+
+   ```bash
+   livekit-server --config livekit.yaml
+   ```
+
+2. Set `LIVEKIT_HOST`, `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` in your `.env` file.
+3. Open `livekit.html` to initiate calls routed through LiveKit.
+
 ## Lovense Integration
 
 `lovense.js` demonstrates a minimal connection to the local **Lovense Connect** API. When a call starts, the script attempts to discover any paired toys on `http://localhost:30010` and triggers a short vibration once the remote stream is received. Ensure the Lovense Connect app is running for the demo to work.
