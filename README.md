@@ -30,6 +30,22 @@ the project root. Open this file directly in your browser (e.g.
 a local web server, navigate to `/feelynx-coins.html`. The page lists available
 coin bundles and acts as a prototype checkout screen.
 
+## Stripe Test Payments
+
+Checkout sessions are created by posting to `/checkout-session` with a JSON body
+containing `packageId` and `userId`. Use Stripe's test card `4242 4242 4242 4242`
+with any future expiration date and CVC to simulate a purchase. The default
+callback URLs are:
+
+```
+Success: http://localhost:8080/success.html
+Cancel:  http://localhost:8080/cancel.html
+Webhook endpoint: http://localhost:8080/webhook
+```
+
+When a payment succeeds, the webhook stores the purchase and updates the user's
+token balance in `db.json`.
+
 ## Production Configuration
 
 The server uses environment variables loaded from a `.env` file. For a
