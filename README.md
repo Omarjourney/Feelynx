@@ -43,3 +43,21 @@ Run the server in production mode with:
 ```bash
 NODE_ENV=production npm start
 ```
+
+## CI and Docker Deployment
+
+The repository includes a GitHub Actions workflow defined in
+`.github/workflows/node.yml`. It installs dependencies, runs the test suite and
+builds a Docker image for the application. When changes are pushed to the
+`main` branch the workflow will also publish the image to GitHub Container
+Registry (GHCR) using the `GITHUB_TOKEN` provided by GitHub.
+
+### Triggering Production Deployments
+
+Merges or pushes to `main` automatically build and publish the Docker image. A
+deployment can also be initiated manually from the **Actions** tab by selecting
+the **Node CI** workflow and pressing **Run workflow**. Ensure your account has
+permissions to push packages so the image can be uploaded.
+
+If you would like to deploy to another container registry or hosting provider,
+edit the publish step in `node.yml` with your registry credentials.
