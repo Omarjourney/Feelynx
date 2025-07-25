@@ -40,6 +40,23 @@
 
   <script src="lovense.js"></script>
   <script src="webrtc.js"></script>
+  <script src="env.js"></script>
+  <script src="https://browser.sentry-cdn.com/7.91.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
+  <script>
+    if (window.SENTRY_DSN_FRONTEND) {
+      Sentry.init({ dsn: window.SENTRY_DSN_FRONTEND });
+    }
+    if (window.GA_MEASUREMENT_ID) {
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', window.GA_MEASUREMENT_ID);
+    }
+  </script>
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
