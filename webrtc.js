@@ -11,7 +11,10 @@ const allowBtn = document.getElementById('allowPermissions');
 const denyBtn = document.getElementById('denyPermissions');
 const permissionModal = document.getElementById('permissionModal');
 
-const ws = new WebSocket('ws://localhost:8080');
+const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+const wsPort = window.location.port ? `:${window.location.port}` : '';
+const wsUrl = `${wsProtocol}://${window.location.hostname}${wsPort}`;
+const ws = new WebSocket(wsUrl);
 let pc;
 let localStream;
 let muted = false;
