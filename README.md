@@ -3,7 +3,7 @@
 This repository contains a prototype of the Feelynx platform. A simple WebRTC demonstration is included for testing audio/video calls.
 
 ## Running the demo
-1. Copy `.env.example` to `.env` and fill in your Firebase credentials.
+1. Copy `.env.example` to `.env` and fill in your Firebase and AWS credentials.
 2. Install dependencies:
    ```bash
    npm install
@@ -37,6 +37,19 @@ production deployment, ensure that `PORT` is set and any Firebase credentials
 are provided. The server now applies basic security headers with `helmet` and
 rate limiting via `express-rate-limit`. A simple health check endpoint is
 available at `/health`.
+
+### Media Uploads
+
+Two new endpoints are available for creators to upload photos and videos:
+
+```
+POST /api/upload/photo
+POST /api/upload/video
+```
+
+Both accept a `file` field in a `multipart/form-data` request. Uploaded files
+are stored in the configured S3 bucket and the response contains the public URL
+served via your CDN (`MEDIA_BASE_URL`).
 
 Run the server in production mode with:
 
