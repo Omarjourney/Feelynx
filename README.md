@@ -43,3 +43,19 @@ Run the server in production mode with:
 ```bash
 NODE_ENV=production npm start
 ```
+
+## Docker
+
+A `Dockerfile` is provided for running the server in a container.
+
+Build the image:
+
+```bash
+docker build -t feelynx .
+```
+
+Run the container (uses port 8080 by default):
+
+```bash
+docker run --env-file .env -p 8080:8080 feelynx
+```
