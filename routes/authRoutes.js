@@ -8,7 +8,11 @@ const admin = (() => {
   try {
     const adminLib = require('firebase-admin');
     if (!adminLib.apps.length) {
-      adminLib.initializeApp();
+      try {
+        adminLib.initializeApp();
+      } catch (initErr) {
+        return null;
+      }
     }
     return adminLib;
   } catch (e) {
@@ -24,8 +28,12 @@ router.post('/signup', async (req, res) => {
   try {
     let uid;
     if (admin) {
-      const userRecord = await admin.auth().createUser({ email, password });
-      uid = userRecord.uid;
+      try {
+        const userRecord = await admin.auth().createUser({ email, password });
+        uid = userRecord.uid;
+      } catch (adminErr) {
+        uid = undefined;
+      }
     }
     const user = await prisma.user.create({ data: { email, uid } });
     req.session.userId = user.id;
