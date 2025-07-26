@@ -51,6 +51,16 @@ the project root. Open this file directly in your browser (e.g.
 a local web server, navigate to `/feelynx-coins.html`. The page lists available
 coin bundles and acts as a prototype checkout screen.
 
+## Offline Go Live Button
+
+Commit `4d9acc0` removed the remote React and Babel dependencies previously used
+by the Go Live widget. The button now works entirely offline using plain
+JavaScript. Include the script directly:
+
+```html
+<script src="goLiveButton.js"></script>
+```
+
 ## Production Configuration
 
 The server uses environment variables loaded from a `.env` file. For a
@@ -82,3 +92,43 @@ permissions to push packages so the image can be uploaded.
 
 If you would like to deploy to another container registry or hosting provider,
 edit the publish step in `node.yml` with your registry credentials.
+
+## Dependency Audit
+
+An included `audit.py` script scans a local folder or git repository for
+mentions of particular technologies. Provide a path or repository URL with
+`--source` and a space‑separated list of targets:
+
+```bash
+python audit.py --source https://github.com/some/project.git --targets react django
+```
+
+Results are saved to `audit_report.csv` detailing the first occurrence of each
+target.
+
+## Development
+
+### Running tests
+
+The test suite in `test.js` attempts to load `@prisma/client`. When that package
+is not installed it automatically falls back to `prisma_client_stub.js` so the
+tests can run without a database. Execute the tests with:
+
+```bash
+npm test
+```
+
+### Frontend build
+
+The `src/` directory contains a React/TypeScript frontend compiled with Vite.
+Use the dev server while working on the UI:
+
+```bash
+npm run dev
+```
+
+Generate production assets with:
+
+```bash
+npm run build
+```
