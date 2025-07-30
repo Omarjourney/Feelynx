@@ -55,7 +55,7 @@ coin bundles and acts as a prototype checkout screen.
 
 Commit `4d9acc0` removed the remote React and Babel dependencies previously used
 by the Go Live widget. The button now works entirely offline using plain
-JavaScript. Include the script directly:
+JavaScript. Load the widget by including `goLiveButton.js` directly:
 
 ```html
 <script src="goLiveButton.js"></script>
@@ -95,9 +95,9 @@ edit the publish step in `node.yml` with your registry credentials.
 
 ## Dependency Audit
 
-An included `audit.py` script scans a local folder or git repository for
-mentions of particular technologies. Provide a path or repository URL with
-`--source` and a space‑separated list of targets:
+Use `audit.py` to search a local folder or git repository for dependency
+references. Provide a path or repository URL with `--source` and one or more
+names to locate with `--targets`:
 
 ```bash
 python audit.py --source https://github.com/some/project.git --targets react django
