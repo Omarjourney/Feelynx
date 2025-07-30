@@ -132,3 +132,8 @@ Generate production assets with:
 ```bash
 npm run build
 ```
+
+## Explorers Feature
+The new Explorers page consumes `/api/creators` to display creators with
+search, filtering and sorting. See [docs/explorers-api.md](docs/explorers-api.md)
+for details on extending the API and integrating real-time status updates.
