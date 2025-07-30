@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Creator {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  displayName   String
+  avatar        String
+  country       String
+  specialty     String
+  isLive        Boolean
+  followers     Int
+  trendingScore Float
+  createdAt     DateTime @default(now())
+  lastOnline    DateTime
+}
