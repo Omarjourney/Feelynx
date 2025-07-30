@@ -2,6 +2,8 @@
 
 This repository contains a prototype of the Feelynx platform. A simple WebRTC demonstration is included for testing audio/video calls.
 
+If you cannot access the official WebRTC guides, see [`docs/peer-connections-overview.md`](docs/peer-connections-overview.md) for a short walkthrough of creating a peer connection. The **Calls** tab now includes a "Peer Connection Guide" button linking to this document.
+
 ## Running the demo
 1. Copy `.env.example` to `.env` and fill in your Firebase credentials.
 2. Install dependencies:
