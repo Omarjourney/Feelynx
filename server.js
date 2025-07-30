@@ -21,8 +21,8 @@ app.get('/health', (req, res) => {
   res.send('ok');
 });
 
-// Serve static files from the project root so index.html works out of the box
-app.use(express.static(path.join(__dirname)));
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/livekit-token', (req, res) => {
   const identity = req.query.identity || 'user';
