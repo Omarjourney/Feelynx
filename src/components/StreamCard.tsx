@@ -11,6 +11,10 @@ interface Stream {
 
 const StreamCard: React.FC<{ stream: Stream }> = ({ stream }) => {
   const [preview, setPreview] = useState(false);
+  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const avatarSrc = stream.avatar.startsWith('http')
+    ? stream.avatar
+    : `${base}${stream.avatar}`;
 
   return (
     <a
@@ -21,7 +25,7 @@ const StreamCard: React.FC<{ stream: Stream }> = ({ stream }) => {
       onFocus={() => setPreview(true)}
       onBlur={() => setPreview(false)}
     >
-      <img src={stream.avatar} alt={stream.username} className="rounded w-full" />
+      <img src={avatarSrc} alt={stream.username} className="rounded w-full" />
       {preview && (
         <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-xs">
           <video
