@@ -39,6 +39,19 @@ For a more fully featured experience you can run the project against [LiveKit](h
 2. Set `LIVEKIT_HOST`, `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` in your `.env` file.
 3. Open `livekit.html` to initiate calls routed through LiveKit.
 
+### Room Management
+
+With your LiveKit credentials configured, the server exposes a few helper
+endpoints for room management:
+
+- `POST /livekit-room` – create a room. Pass JSON such as
+  `{ "name": "myroom", "emptyTimeout": 600, "maxParticipants": 20 }`.
+- `GET /livekit-room` – list all active rooms.
+- `DELETE /livekit-room/:name` – delete a room by name.
+
+These endpoints require `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` to be set and
+proxy directly to the LiveKit `RoomService` API.
+
 ## Lovense Integration
 
 `lovense.js` demonstrates a minimal connection to the local **Lovense Connect** API. When a call starts, the script attempts to discover any paired toys on `http://localhost:30010` and triggers a short vibration once the remote stream is received. Ensure the Lovense Connect app is running for the demo to work.
