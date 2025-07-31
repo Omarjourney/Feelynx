@@ -8,11 +8,25 @@ export default function useWebRTC(clientId, targetId) {
   const streamRef = useRef(null);
   const [mediaError, setMediaError] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionError, setConnectionError] = useState('');
 
   useEffect(() => {
+    setConnectionError('');
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const port = window.location.port ? `:${window.location.port}` : '';
-    wsRef.current = new WebSocket(`${protocol}://${window.location.hostname}${port}/ws`);
+    const hostname = window.location.hostname || 'localhost';
+    const port = window.location.port || import.meta.env.VITE_WS_PORT || '8080';
+    wsRef.current = new WebSocket(
+      `${protocol}://${hostname}${port ? `:${port}` : ''}/ws`
+    );
+
+    wsRef.current.onerror = (err) => {
+      console.error('WebSocket connection error', err);
+      setConnectionError(err?.message || 'WebSocket connection error');
+    };
+
+    wsRef.current.onclose = () => {
+      setConnectionError('WebSocket connection closed');
+    };
 
     wsRef.current.onmessage = async (event) => {
       const msg = JSON.parse(event.data);
@@ -78,5 +92,13 @@ export default function useWebRTC(clientId, targetId) {
     streamRef.current = null;
   }, []);
 
-  return { localVideoRef, remoteVideoRef, startCall, endCall, mediaError, isConnecting };
+  return {
+    localVideoRef,
+    remoteVideoRef,
+    startCall,
+    endCall,
+    mediaError,
+    isConnecting,
+    connectionError
+  };
 }

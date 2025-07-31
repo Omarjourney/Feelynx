@@ -5,4 +5,5 @@ export default function useWebRTC(clientId: string, targetId: string): {
   endCall: () => void;
   mediaError: string;
   isConnecting: boolean;
+  connectionError: string;
 };
