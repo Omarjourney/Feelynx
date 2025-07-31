@@ -1,0 +1,27 @@
+name: Node CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+      - run: npm run build --if-present
+      - run: docker build -t feelynx:${{ github.sha }} .
+      - name: Publish to GHCR
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker tag feelynx:${{ github.sha }} ghcr.io/${{ github.repository }}/feelynx:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository }}/feelynx:${{ github.sha }}
