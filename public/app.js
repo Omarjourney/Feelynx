@@ -932,7 +932,7 @@ function renderLiveCarousel(containerId) {
                 </div>
                 <div class="creator-actions">
                     <button class="btn btn--tip btn--sm" onclick="event.stopPropagation(); openTipModal('${creator.username}')">💸 Tip</button>
-                    <button class="btn btn--outline btn--sm">👁️ Watch</button>
+                    <a class="btn btn--outline btn--sm" href="/live/${creator.username}">👁️ Watch</a>
                 </div>
             </div>
         </div>

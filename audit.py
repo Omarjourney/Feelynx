@@ -3,7 +3,6 @@ import csv
 import os
 import subprocess
 import sys
-tempfile_module=None
 import tempfile
 from typing import Dict, Iterable, Tuple
 
