@@ -64,15 +64,6 @@ the project root. Open this file directly in your browser (e.g.
 a local web server, navigate to `/feelynx-coins.html`. The page lists available
 coin bundles and acts as a prototype checkout screen.
 
-## Offline Go Live Button
-
-Commit `4d9acc0` removed the remote React and Babel dependencies previously used
-by the Go Live widget. The button now works entirely offline using plain
-JavaScript. Load the widget by including `goLiveButton.js` directly:
-
-```html
-<script src="goLiveButton.js"></script>
-```
 
 ## Production Configuration
 

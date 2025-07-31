@@ -1,14 +1,47 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const jwt = require('jsonwebtoken');
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
+
+// Stripe webhook must be processed before body parsing
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET || ''
+    );
+  } catch (err) {
+    console.error('Webhook signature verification failed.', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    const userId = parseInt(session.metadata.userId, 10);
+    const tokens = parseInt(session.metadata.tokens, 10);
+    addPurchase({
+      id: Date.now(),
+      userId,
+      tokens,
+      sessionId: session.id,
+      created: new Date().toISOString(),
+    });
+    updateUserBalance(userId, tokens);
+  }
+  res.json({ received: true });
+});
+
+app.use(express.json());
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
