@@ -12,13 +12,15 @@ export interface Post {
 const PostCard: React.FC<{ post: Post }> = ({ post }) => {
   const [unlocked, setUnlocked] = useState(!post.locked);
   const [showTip, setShowTip] = useState(false);
+  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const src = post.src.startsWith('http') ? post.src : `${base}${post.src}`;
 
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden">
       {post.type === 'image' ? (
-        <img src={post.src} alt="post" className={unlocked ? '' : 'blur-sm'} />
+        <img src={src} alt="post" className={unlocked ? '' : 'blur-sm'} />
       ) : (
-        <video controls className={unlocked ? '' : 'blur-sm'} src={post.src} />
+        <video controls className={unlocked ? '' : 'blur-sm'} src={src} />
       )}
       {!unlocked && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 space-y-2">

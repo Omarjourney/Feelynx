@@ -4,16 +4,6 @@ const path = require('path');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const { AccessToken, RoomServiceClient } = require('livekit-server-sdk');
-const cors = require('cors');
-
-const livekitHost = process.env.LIVEKIT_HOST || 'http://localhost:7880';
-const livekitApiKey = process.env.LIVEKIT_API_KEY || '';
-const livekitApiSecret = process.env.LIVEKIT_API_SECRET || '';
-const roomService =
-  livekitApiKey && livekitApiSecret
-    ? new RoomServiceClient(livekitHost, livekitApiKey, livekitApiSecret)
-    : null;
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -58,62 +48,38 @@ let creators = [
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
+app.use(express.json());
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: process.env.AWS_ACCESS_KEY_ID
+    ? {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      }
+    : undefined,
+});
+
+async function uploadToS3(file, folder) {
+  const key = `${folder}/${crypto.randomUUID()}-${file.originalname}`;
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    })
+  );
+  const base = process.env.MEDIA_BASE_URL || '';
+  return `${base}${key}`;
+}
 
 app.get('/health', (req, res) => {
   res.send('ok');
 });
 
-app.get('/livekit-token', (req, res) => {
-  const identity = req.query.identity || 'user';
-  const room = req.query.room || 'feelynx';
-  if (!livekitApiKey || !livekitApiSecret) {
-    return res.status(500).send('LiveKit credentials not configured');
-  }
-  const at = new AccessToken(livekitApiKey, livekitApiSecret, { identity, ttl: 3600 });
-  at.addGrant({ roomJoin: true, room });
-  res.json({ token: at.toJwt(), url: livekitHost });
-});
-
-app.post('/livekit-room', async (req, res) => {
-  if (!roomService) {
-    return res.status(500).send('LiveKit credentials not configured');
-  }
-  const { name, emptyTimeout, maxParticipants } = req.body;
-  try {
-    const room = await roomService.createRoom({
-      name,
-      emptyTimeout,
-      maxParticipants,
-    });
-    res.json(room);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/livekit-room', async (req, res) => {
-  if (!roomService) {
-    return res.status(500).send('LiveKit credentials not configured');
-  }
-  try {
-    const rooms = await roomService.listRooms();
-    res.json(rooms);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.delete('/livekit-room/:name', async (req, res) => {
-  if (!roomService) {
-    return res.status(500).send('LiveKit credentials not configured');
-  }
-  try {
-    await roomService.deleteRoom(req.params.name);
-    res.sendStatus(204);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 const server = app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
