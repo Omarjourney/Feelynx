@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 export default function useWebRTC(clientId, targetId) {
   const localVideoRef = useRef(null);
@@ -6,6 +6,8 @@ export default function useWebRTC(clientId, targetId) {
   const wsRef = useRef(null);
   const pcRef = useRef(null);
   const streamRef = useRef(null);
+  const [mediaError, setMediaError] = useState('');
+  const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
@@ -52,13 +54,21 @@ export default function useWebRTC(clientId, targetId) {
   };
 
   const startCall = useCallback(async () => {
-    streamRef.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    localVideoRef.current.srcObject = streamRef.current;
-    await ensurePeer();
-    streamRef.current.getTracks().forEach(t => pcRef.current.addTrack(t, streamRef.current));
-    const offer = await pcRef.current.createOffer();
-    await pcRef.current.setLocalDescription(offer);
-    wsRef.current.send(JSON.stringify({ from: clientId, to: targetId, offer }));
+    setMediaError('');
+    setIsConnecting(true);
+    try {
+      streamRef.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      localVideoRef.current.srcObject = streamRef.current;
+      await ensurePeer();
+      streamRef.current.getTracks().forEach(t => pcRef.current.addTrack(t, streamRef.current));
+      const offer = await pcRef.current.createOffer();
+      await pcRef.current.setLocalDescription(offer);
+      wsRef.current.send(JSON.stringify({ from: clientId, to: targetId, offer }));
+    } catch (err) {
+      setMediaError('Unable to access camera or microphone');
+    } finally {
+      setIsConnecting(false);
+    }
   }, [clientId, targetId]);
 
   const endCall = useCallback(() => {
@@ -68,5 +78,5 @@ export default function useWebRTC(clientId, targetId) {
     streamRef.current = null;
   }, []);
 
-  return { localVideoRef, remoteVideoRef, startCall, endCall };
+  return { localVideoRef, remoteVideoRef, startCall, endCall, mediaError, isConnecting };
 }

@@ -1,17 +1,10 @@
 import React from 'react';
+import { Creator } from '../types';
 
-interface Creator {
-  id: number;
-  username: string;
-  avatar: string;
-  online: boolean;
-  rate: number;
-}
-
-const CreatorCard: React.FC<{ creator: Creator }> = ({ creator }) => (
+const CreatorCard: React.FC<{ creator: Pick<Creator, 'id' | 'username' | 'avatar' | 'isLive' | 'rate'> }> = ({ creator }) => (
   <div className="relative bg-gray-800 rounded-lg p-2">
     <img src={creator.avatar} alt={creator.username} className="rounded" />
-    {creator.online && (
+    {creator.isLive && (
       <div className="absolute top-2 right-2 bg-green-500 text-xs px-1 rounded">
         Live
       </div>

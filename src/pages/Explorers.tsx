@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
-interface Creator {
-  id: number;
-  username: string;
-  displayName: string;
-  avatar: string;
-  country: string;
-  specialty: string;
-  isLive: boolean;
-}
+import { Creator } from '../types';
 
 // Fetch creators from the backend with optional query parameters
 const Explorers: React.FC = () => {
-  const [creators, setCreators] = useState<Creator[]>([]);
+  const [creators, setCreators] = useState<Pick<Creator, 'id' | 'username' | 'displayName' | 'avatar' | 'country' | 'specialty' | 'isLive'>[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const [country, setCountry] = useState('');
-  const [specialty, setSpecialty] = useState('');
+  const [country, setCountry] = useState('all');
+  const [specialty, setSpecialty] = useState('all');
   const [liveOnly, setLiveOnly] = useState(false);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<'trendingScore' | 'createdAt' | 'followers'>('trendingScore');
@@ -27,8 +18,8 @@ const Explorers: React.FC = () => {
     setLoading(true);
     setError('');
     const params = new URLSearchParams();
-    if (country) params.append('country', country);
-    if (specialty) params.append('specialty', specialty);
+    if (country !== 'all') params.append('country', country);
+    if (specialty !== 'all') params.append('specialty', specialty);
     if (liveOnly) params.append('isLive', 'true');
     if (search) params.append('search', search);
     params.append('sort', sort);
@@ -64,7 +55,7 @@ const Explorers: React.FC = () => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         >
-          <option value="">All Countries</option>
+          <option value="all">All Countries</option>
           <option value="US">US</option>
           <option value="CA">CA</option>
         </select>
@@ -74,7 +65,7 @@ const Explorers: React.FC = () => {
           value={specialty}
           onChange={(e) => setSpecialty(e.target.value)}
         >
-          <option value="">All Specialties</option>
+          <option value="all">All Specialties</option>
           <option value="gaming">Gaming</option>
           <option value="music">Music</option>
         </select>
