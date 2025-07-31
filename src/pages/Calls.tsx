@@ -15,9 +15,7 @@ const Calls: React.FC = () => {
     <div className="p-4">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {creators.map((c) => (
-          <div key={c.id} onClick={() => setActive(c)}>
-            <CallCard creator={c} />
-          </div>
+          <CallCard key={c.id} creator={c} onStart={() => setActive(c)} />
         ))}
       </div>
       {active && (

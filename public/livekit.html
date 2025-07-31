@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feelynx LiveKit Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center py-8">
+    <h1 class="text-3xl font-bold mb-6 text-pink-400">LiveKit Demo</h1>
+
+    <div id="videos" class="flex flex-wrap justify-center space-x-2 mb-4">
+      <video id="localVideo" class="bg-black rounded w-64 md:w-80" autoplay muted></video>
+      <video id="remoteVideo" class="bg-black rounded w-64 md:w-80" autoplay></video>
+    </div>
+
+    <div class="flex space-x-3">
+      <button id="startCall" class="px-4 py-2 bg-pink-600 rounded text-white hover:bg-pink-500">Start Call</button>
+      <button id="endCall" class="px-4 py-2 bg-gray-700 rounded text-white" title="End call">End</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.min.js"></script>
+  <script src="livekit.js"></script>
+</body>
+</html>

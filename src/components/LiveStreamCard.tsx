@@ -18,6 +18,11 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
   streamPreviewUrl,
 }) => {
   const [showPreview, setShowPreview] = useState(false);
+  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const avatarSrc = avatarUrl.startsWith('http') ? avatarUrl : `${base}${avatarUrl}`;
+  const previewSrc = streamPreviewUrl.startsWith('http')
+    ? streamPreviewUrl
+    : `${base}${streamPreviewUrl}`;
 
   return (
     <a
@@ -28,11 +33,11 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
       onFocus={() => setShowPreview(true)}
       onBlur={() => setShowPreview(false)}
     >
-      <img src={avatarUrl} alt={username} className="w-full h-40 object-cover" />
+      <img src={avatarSrc} alt={username} className="w-full h-40 object-cover" />
       {showPreview && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
           <video
-            src={streamPreviewUrl}
+            src={previewSrc}
             autoPlay
             loop
             muted

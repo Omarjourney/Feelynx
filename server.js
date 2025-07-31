@@ -5,33 +5,6 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || '');
-
-const DB_PATH = path.join(__dirname, 'db.json');
-const tokenPackages = require('./tokenPackages.json');
-
-function readDB() {
-  return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
-}
-
-function writeDB(data) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-}
-
-function addPurchase(purchase) {
-  const db = readDB();
-  db.purchases.push(purchase);
-  writeDB(db);
-}
-
-function updateUserBalance(userId, tokens) {
-  const db = readDB();
-  const user = db.users.find(u => u.id === userId);
-  if (user) {
-    user.balance = (user.balance || 0) + tokens;
-    writeDB(db);
-  }
-}
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -72,48 +45,55 @@ app.use(express.json());
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
+app.use(express.json());
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: process.env.AWS_ACCESS_KEY_ID
+    ? {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      }
+    : undefined,
+});
+
+async function uploadToS3(file, folder) {
+  const key = `${folder}/${crypto.randomUUID()}-${file.originalname}`;
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    })
+  );
+  const base = process.env.MEDIA_BASE_URL || '';
+  return `${base}${key}`;
+}
+
+function requireAdmin(req, res, next) {
+  const authHeader = req.headers['authorization'] || '';
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    if (payload.role !== 'admin') {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    req.user = payload;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+}
 
 app.get('/health', (req, res) => {
   res.send('ok');
 });
-
-app.post('/checkout-session', async (req, res) => {
-  const { packageId, userId } = req.body;
-  const pack = tokenPackages.find(p => p.id === Number(packageId));
-  if (!pack) {
-    return res.status(400).json({ error: 'Invalid package' });
-  }
-
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            unit_amount: Math.round(pack.price * 100),
-            product_data: { name: `${pack.webTokens} Vibecoins` },
-          },
-          quantity: 1,
-        },
-      ],
-      metadata: {
-        userId,
-        tokens: pack.webTokens,
-      },
-      success_url: `${req.protocol}://${req.get('host')}/success.html`,
-      cancel_url: `${req.protocol}://${req.get('host')}/cancel.html`,
-    });
-    res.json({ url: session.url });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Could not create session' });
-  }
-});
-
-// Serve static files from the project root so index.html works out of the box
-app.use(express.static(path.join(__dirname)));
 
 const server = app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
@@ -130,6 +110,12 @@ wss.on('connection', ws => {
       }
     });
   });
+  // Example: notify clients about status changes
+  ws.send(JSON.stringify({ type: 'welcome', connectedClients: wss.clients.size }));
 });
 
 console.log(`WebSocket signaling server running on ws://localhost:${port}`);
+
+// In a real deployment review authentication, rate limiting and database
+// operations closely. Payments, messaging and group room functionality would
+// extend these endpoints with proper access controls.

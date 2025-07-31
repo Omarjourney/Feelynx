@@ -20,6 +20,8 @@ const SubscriptionPost: React.FC<SubscriptionPostProps> = ({
 }) => {
   const [unlocked, setUnlocked] = useState(!isLocked);
   const [showTip, setShowTip] = useState(false);
+  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const url = contentUrl.startsWith('http') ? contentUrl : `${base}${contentUrl}`;
 
   const unlock = () => {
     setUnlocked(true);
@@ -28,7 +30,7 @@ const SubscriptionPost: React.FC<SubscriptionPostProps> = ({
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden relative">
       <img
-        src={contentUrl}
+        src={url}
         alt="post"
         className={`w-full ${unlocked ? '' : 'blur-md'}`}
       />
