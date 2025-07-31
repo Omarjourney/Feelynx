@@ -4,47 +4,11 @@ const path = require('path');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const jwt = require('jsonwebtoken');
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Mock list of creators. Replace with a database in production.
-let creators = [
-  {
-    id: 1,
-    username: 'alpha',
-    displayName: 'Alpha One',
-    avatar: 'https://placekitten.com/200/200',
-    country: 'US',
-    specialty: 'gaming',
-    isLive: true,
-    followers: 1000,
-    trendingScore: 50,
-    createdAt: new Date().toISOString(),
-    lastOnline: new Date().toISOString(),
-  },
-  {
-    id: 2,
-    username: 'beta',
-    displayName: 'Beta Two',
-    avatar: 'https://placekitten.com/201/200',
-    country: 'CA',
-    specialty: 'music',
-    isLive: false,
-    followers: 500,
-    trendingScore: 20,
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-    lastOnline: new Date(Date.now() - 3600000).toISOString(),
-  },
-];
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
@@ -76,10 +40,27 @@ async function uploadToS3(file, folder) {
   return `${base}${key}`;
 }
 
+function requireAdmin(req, res, next) {
+  const authHeader = req.headers['authorization'] || '';
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    if (payload.role !== 'admin') {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    req.user = payload;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+}
+
 app.get('/health', (req, res) => {
   res.send('ok');
 });
-
 
 const server = app.listen(port, () => {
   console.log(`HTTP server running on http://localhost:${port}`);
