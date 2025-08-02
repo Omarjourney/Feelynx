@@ -5,10 +5,42 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const Stripe = require('stripe');
+const multer = require('multer');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
+
+const DB_PATH = path.join(__dirname, 'db.json');
+
+function readDB() {
+  return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+}
+
+function writeDB(data) {
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+}
+
+function addPurchase(purchase) {
+  const db = readDB();
+  db.purchases.push(purchase);
+  writeDB(db);
+}
+
+function updateUserBalance(userId, tokens) {
+  const db = readDB();
+  const user = db.users.find(u => u.id === userId);
+  if (user) {
+    user.balance = (user.balance || 0) + tokens;
+    writeDB(db);
+  }
+}
 
 // Stripe webhook must be processed before body parsing
 app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
@@ -119,3 +151,10 @@ console.log(`WebSocket signaling server running on ws://localhost:${port}`);
 // In a real deployment review authentication, rate limiting and database
 // operations closely. Payments, messaging and group room functionality would
 // extend these endpoints with proper access controls.
+
+module.exports = {
+  addPurchase,
+  updateUserBalance,
+  uploadToS3,
+  requireAdmin,
+};
