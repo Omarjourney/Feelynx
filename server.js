@@ -27,31 +27,32 @@ app.use(cors());
 
 const DB_PATH = path.join(__dirname, 'db.json');
 
-function readDB() {
-  return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+async function readDB() {
+  const data = await fs.promises.readFile(DB_PATH, 'utf8');
+  return JSON.parse(data);
 }
 
-function writeDB(data) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+async function writeDB(data) {
+  await fs.promises.writeFile(DB_PATH, JSON.stringify(data, null, 2));
 }
 
-function addPurchase(purchase) {
-  const db = readDB();
+async function addPurchase(purchase) {
+  const db = await readDB();
   db.purchases.push(purchase);
-  writeDB(db);
+  await writeDB(db);
 }
 
-function updateUserBalance(userId, tokens) {
-  const db = readDB();
+async function updateUserBalance(userId, tokens) {
+  const db = await readDB();
   const user = db.users.find(u => u.id === userId);
   if (user) {
     user.balance = (user.balance || 0) + tokens;
-    writeDB(db);
+    await writeDB(db);
   }
 }
 
 // Stripe webhook must be processed before body parsing
-app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
   try {
@@ -69,14 +70,14 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
     const session = event.data.object;
     const userId = parseInt(session.metadata.userId, 10);
     const tokens = parseInt(session.metadata.tokens, 10);
-    addPurchase({
+    await addPurchase({
       id: Date.now(),
       userId,
       tokens,
       sessionId: session.id,
       created: new Date().toISOString(),
     });
-    updateUserBalance(userId, tokens);
+    await updateUserBalance(userId, tokens);
   }
   res.json({ received: true });
 });
