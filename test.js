@@ -1,13 +1,9 @@
 require('dotenv').config();
-const { execSync } = require('child_process');
-const { PrismaClient } = require('@prisma/client');
-
-async function runMigrations() {
-  execSync('npx prisma migrate deploy', { stdio: 'inherit' });
-}
+// Use a lightweight stub of the Prisma client so tests do not require
+// the full Prisma engine or a database connection.
+const { PrismaClient } = require('./prisma_client_stub');
 
 async function main() {
-  await runMigrations();
   const prisma = new PrismaClient();
   const users = await prisma.user.findMany();
   console.log('Users:', users);
