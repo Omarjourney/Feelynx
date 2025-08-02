@@ -13,6 +13,12 @@ const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+  console.error('JWT_SECRET environment variable is required');
+  process.exit(1);
+}
+
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
@@ -111,7 +117,7 @@ function requireAdmin(req, res, next) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    const payload = jwt.verify(token, jwtSecret);
     if (payload.role !== 'admin') {
       return res.status(403).json({ error: 'Forbidden' });
     }
