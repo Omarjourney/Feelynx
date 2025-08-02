@@ -99,7 +99,22 @@ const s3 = new S3Client({
 });
 
 async function uploadToS3(file, folder) {
-  const key = `${folder}/${crypto.randomUUID()}-${file.originalname}`;
+  // Folders may only contain alphanumeric characters, hyphens, underscores
+  // and forward slashes. Leading or trailing slashes and traversal segments
+  // like `..` are rejected to prevent unintended S3 key paths.
+  const folderPattern = /^[A-Za-z0-9_/-]+$/;
+  if (!folderPattern.test(folder)) {
+    throw new Error('Invalid folder name');
+  }
+  const normalized = path.posix
+    .normalize(folder)
+    .replace(/^\/+/g, '')
+    .replace(/\/+$/g, '');
+  if (!normalized || normalized.includes('..')) {
+    throw new Error('Invalid folder name');
+  }
+  const fileName = path.basename(file.originalname);
+  const key = `${normalized}/${crypto.randomUUID()}-${fileName}`;
   await s3.send(
     new PutObjectCommand({
       Bucket: process.env.S3_BUCKET,

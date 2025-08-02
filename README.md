@@ -91,6 +91,12 @@ available at `/health`.
 | `LIVEKIT_API_SECRET` | API secret for LiveKit. |
 | `FIREBASE_*` | Firebase configuration keys. |
 
+### S3 Upload Folders
+
+When using the `uploadToS3` helper, the `folder` argument must contain only
+letters, numbers, hyphens, underscores or forward slashes. Leading or trailing
+slashes and path traversal segments such as `..` are rejected.
+
 Run the server in production mode with:
 
 ```bash
