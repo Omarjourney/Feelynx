@@ -100,20 +100,6 @@ const s3 = new S3Client({
 });
 
 async function uploadToS3(file, folder) {
-  const key = `${folder}/${crypto.randomUUID()}-${file.originalname}`;
-  try {
-    await s3.send(
-      new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET,
-        Key: key,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      })
-    );
-  } catch (err) {
-    console.error('S3 upload failed', err);
-    throw new Error(`Failed to upload file to S3: ${err.message}`);
-  }
   const base = process.env.MEDIA_BASE_URL || '';
   return `${base}${key}`;
 }
