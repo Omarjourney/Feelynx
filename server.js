@@ -45,7 +45,6 @@ app.use(express.json());
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
-app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
