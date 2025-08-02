@@ -29,7 +29,13 @@ export default function useWebRTC(clientId, targetId) {
     };
 
     wsRef.current.onmessage = async (event) => {
-      const msg = JSON.parse(event.data);
+      let msg;
+      try {
+        msg = JSON.parse(event.data);
+      } catch (err) {
+        console.error('Failed to parse WebSocket message', err);
+        return;
+      }
       if (msg.to && msg.to !== clientId) return;
       await ensurePeer();
       if (msg.offer) {
@@ -51,7 +57,7 @@ export default function useWebRTC(clientId, targetId) {
       pcRef.current?.close();
       streamRef.current?.getTracks().forEach(t => t.stop());
     };
-  }, [clientId]);
+  }, [clientId, targetId]);
 
   const ensurePeer = async () => {
     if (pcRef.current) return;
