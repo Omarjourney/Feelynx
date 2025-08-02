@@ -51,7 +51,7 @@ export default function useWebRTC(clientId, targetId) {
       pcRef.current?.close();
       streamRef.current?.getTracks().forEach(t => t.stop());
     };
-  }, [clientId]);
+  }, [clientId, targetId]);
 
   const ensurePeer = async () => {
     if (pcRef.current) return;
