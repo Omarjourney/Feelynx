@@ -5,6 +5,7 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 const Stripe = require('stripe');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -22,6 +23,7 @@ if (!jwtSecret) {
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
+app.use(cors());
 
 const DB_PATH = path.join(__dirname, 'db.json');
 

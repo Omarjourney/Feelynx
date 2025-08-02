@@ -5,7 +5,7 @@ This repository contains a prototype of the Feelynx platform. A simple WebRTC de
 If you cannot access the official WebRTC guides, see [`docs/peer-connections-overview.md`](docs/peer-connections-overview.md) for a short walkthrough of creating a peer connection.
 
 ## Running the demo
-1. Copy `.env.example` to `.env` and fill in your Firebase and AWS credentials.
+1. Copy `.env.example` to `.env` and fill in your Firebase, AWS, Stripe, LiveKit and JWT credentials.
 2. Install dependencies:
    ```bash
    npm install
