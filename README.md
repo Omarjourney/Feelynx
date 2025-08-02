@@ -73,18 +73,23 @@ are provided. The server now applies basic security headers with `helmet` and
 rate limiting via `express-rate-limit`. A simple health check endpoint is
 available at `/health`.
 
-### Media Uploads
+### Environment Variables
 
-Two new endpoints are available for creators to upload photos and videos:
-
-```
-POST /api/upload/photo
-POST /api/upload/video
-```
-
-Both accept a `file` field in a `multipart/form-data` request. Uploaded files
-are stored in the configured S3 bucket and the response contains the public URL
-served via your CDN (`MEDIA_BASE_URL`).
+| Variable | Description |
+| --- | --- |
+| `PORT` | Port for the HTTP server (default 8080). |
+| `JWT_SECRET` | Secret used to sign JSON Web Tokens. |
+| `STRIPE_SECRET_KEY` | Stripe secret key for payments. |
+| `STRIPE_WEBHOOK_SECRET` | Secret to verify Stripe webhooks. |
+| `AWS_REGION` | AWS region of the S3 bucket. |
+| `AWS_ACCESS_KEY_ID` | Access key for AWS SDK. |
+| `AWS_SECRET_ACCESS_KEY` | Secret key for AWS SDK. |
+| `S3_BUCKET` | Target S3 bucket for uploads. |
+| `MEDIA_BASE_URL` | Public base URL for served media. |
+| `LIVEKIT_HOST` | LiveKit server URL. |
+| `LIVEKIT_API_KEY` | API key for LiveKit. |
+| `LIVEKIT_API_SECRET` | API secret for LiveKit. |
+| `FIREBASE_*` | Firebase configuration keys. |
 
 Run the server in production mode with:
 
