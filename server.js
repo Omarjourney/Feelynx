@@ -11,6 +11,7 @@ const multer = require('multer');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { AccessToken, RoomServiceClient } = require('livekit-server-sdk');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
@@ -99,6 +100,27 @@ const s3 = new S3Client({
     : undefined,
 });
 
+const LIVEKIT_HOST = process.env.LIVEKIT_HOST;
+const LIVEKIT_API_KEY = process.env.LIVEKIT_API_KEY;
+const LIVEKIT_API_SECRET = process.env.LIVEKIT_API_SECRET;
+let roomService;
+
+function ensureLiveKitEnv(req, res, next) {
+  if (!LIVEKIT_HOST || !LIVEKIT_API_KEY || !LIVEKIT_API_SECRET) {
+    return res
+      .status(503)
+      .json({ error: 'LiveKit environment variables are not configured' });
+  }
+  if (!roomService) {
+    roomService = new RoomServiceClient(
+      LIVEKIT_HOST,
+      LIVEKIT_API_KEY,
+      LIVEKIT_API_SECRET
+    );
+  }
+  next();
+}
+
 async function uploadToS3(file, folder) {
   const base = process.env.MEDIA_BASE_URL || '';
   return `${base}${key}`;
@@ -124,6 +146,50 @@ function requireAdmin(req, res, next) {
 
 app.get('/health', (req, res) => {
   res.send('ok');
+});
+
+app.get('/livekit-token', ensureLiveKitEnv, (req, res) => {
+  const { identity, room } = req.query;
+  if (!identity) {
+    return res.status(400).json({ error: 'identity is required' });
+  }
+  const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
+    identity,
+  });
+  at.addGrant({ roomJoin: true, room });
+  const token = at.toJwt();
+  res.json({ token });
+});
+
+app.post('/rooms', ensureLiveKitEnv, async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({ error: 'name is required' });
+    }
+    const room = await roomService.createRoom({ name });
+    res.json(room);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/rooms', ensureLiveKitEnv, async (req, res) => {
+  try {
+    const rooms = await roomService.listRooms();
+    res.json(rooms);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/rooms/:name', ensureLiveKitEnv, async (req, res) => {
+  try {
+    await roomService.deleteRoom(req.params.name);
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 const server = app.listen(port, () => {
