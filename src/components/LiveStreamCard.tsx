@@ -1,65 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface LiveStreamCardProps {
   avatarUrl: string;
   username: string;
   viewerCount: number;
-  isNew?: boolean;
-  isFeatured?: boolean;
   streamPreviewUrl: string;
+  badge?: 'LIVE' | 'VIP' | 'NEW' | 'TRENDING';
+  onWatch?: () => void;
 }
 
 const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
   avatarUrl,
   username,
   viewerCount,
-  isNew,
-  isFeatured,
   streamPreviewUrl,
+  badge,
+  onWatch,
 }) => {
-  const [showPreview, setShowPreview] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const base = process.env.VITE_MEDIA_BASE_URL || '';
   const avatarSrc = avatarUrl.startsWith('http') ? avatarUrl : `${base}${avatarUrl}`;
   const previewSrc = streamPreviewUrl.startsWith('http')
     ? streamPreviewUrl
     : `${base}${streamPreviewUrl}`;
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 },
+    );
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  const badgeColor = {
+    LIVE: 'bg-red-500',
+    VIP: 'bg-purple-500',
+    NEW: 'bg-green-500',
+    TRENDING: 'bg-yellow-500',
+  }[badge || 'LIVE'];
+
   return (
-    <a
-      href={`/live/${username}`}
-      className="relative block bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg"
-      onMouseEnter={() => setShowPreview(true)}
-      onMouseLeave={() => setShowPreview(false)}
-      onFocus={() => setShowPreview(true)}
-      onBlur={() => setShowPreview(false)}
+    <div
+      ref={cardRef}
+      className="relative bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg"
+      onClick={onWatch}
+      tabIndex={0}
     >
       <img src={avatarSrc} alt={username} className="w-full h-40 object-cover" />
-      {showPreview && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-          <video
-            src={previewSrc}
-            autoPlay
-            loop
-            muted
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {isVisible && (
+        <video
+          src={previewSrc}
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
       )}
-      <div className="absolute top-2 left-2 bg-red-500 text-xs px-1 rounded">
-        {viewerCount} watching
+      {/* dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/20 z-10" />
+      <div className="absolute top-2 left-2 bg-black/60 text-xs px-1 rounded z-20">
+        {viewerCount.toLocaleString()} watching
       </div>
-      {isFeatured && (
-        <div className="absolute top-2 right-2 bg-yellow-500 text-xs px-1 rounded">
-          Featured
+      {badge && (
+        <div
+          className={`absolute top-2 right-2 ${badgeColor} text-xs px-1 rounded z-20`}
+        >
+          {badge}
         </div>
       )}
-      {isNew && !isFeatured && (
-        <div className="absolute top-2 right-2 bg-green-500 text-xs px-1 rounded">
-          New
-        </div>
-      )}
-      <div className="p-2 text-sm">@{username}</div>
-    </a>
+      <button
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-blue-600/80 text-white text-xs px-2 py-1 rounded z-20"
+        onClick={(e) => {
+          e.stopPropagation();
+          onWatch?.();
+        }}
+      >
+        Watch Now
+      </button>
+      <div className="p-2 text-sm z-20 relative pointer-events-none">@{username}</div>
+    </div>
   );
 };
 
