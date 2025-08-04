@@ -54,7 +54,9 @@ proxy directly to the LiveKit `RoomService` API.
 
 ## Lovense Integration
 
-`lovense.js` demonstrates a minimal connection to the local **Lovense Connect** API. When a call starts, the script attempts to discover any paired toys on `http://localhost:30010` and triggers a short vibration once the remote stream is received. Ensure the Lovense Connect app is running for the demo to work.
+`lovense.js` now supports both the local **Lovense Connect** API and direct Web Bluetooth connections. When a call starts, the script first attempts to pair with a toy using `navigator.bluetooth`. If that fails it falls back to discovering toys via `http://localhost:30010` and triggers a short vibration once the remote stream is received.
+
+For the Bluetooth path your browser must support the Web Bluetooth API and the toy must be in pairing mode. Otherwise ensure the Lovense Connect app is running so the HTTP fallback can control the device.
 
 ## Purchasing Vibecoins
 
