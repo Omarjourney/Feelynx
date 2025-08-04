@@ -313,126 +313,85 @@
             <div id="dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-dashboard">
                 <div class="container">
                     <div class="dashboard-header">
-                        <h2>Creator Dashboard</h2>
+                        <h2>Fan Dashboard</h2>
                         <div class="dashboard-stats">
                             <div class="quick-stat">
-                                <span class="stat-value">$5,240</span>
-                                <span class="stat-label">Total Earnings</span>
+                                <img src="https://placehold.co/60" alt="User avatar" class="avatar"/>
+                                <div class="stat-info">
+                                    <span class="stat-value">Username</span>
+                                    <span class="stat-label">Gold Tier</span>
+                                </div>
                             </div>
                             <div class="quick-stat">
-                                <span class="stat-value">94%</span>
-                                <span class="stat-label">Your Share</span>
-                            </div>
-                            <div class="quick-stat">
-                                <span class="stat-value">12.8k</span>
-                                <span class="stat-label">Subscribers</span>
+                                <span class="stat-value">1,250</span>
+                                <span class="stat-label">Tokens</span>
+                                <button class="btn btn--primary btn--small">Buy Tokens</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 3D Analytics Section -->
-                    <section class="analytics-section">
-                        <h3>📊 3D Analytics Dashboard</h3>
-                        <div class="holographic-analytics">
-                            <div class="analytics-grid">
-                                <div class="analytics-card">
-                                    <div class="card-header">
-                                        <h4>Revenue Stream</h4>
-                                        <div class="hologram-indicator"></div>
-                                    </div>
-                                    <div class="animated-chart">
-                                        <div class="revenue-bars">
-                                            <div class="bar" style="height: 60%;" data-value="$1,200"></div>
-                                            <div class="bar" style="height: 80%;" data-value="$1,600"></div>
-                                            <div class="bar" style="height: 45%;" data-value="$900"></div>
-                                            <div class="bar" style="height: 90%;" data-value="$1,800"></div>
-                                            <div class="bar" style="height: 70%;" data-value="$1,400"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="analytics-card">
-                                    <div class="card-header">
-                                        <h4>Content Performance</h4>
-                                        <div class="viral-score">🔥 Viral Score: 8.5/10</div>
-                                    </div>
-                                    <div class="performance-metrics">
-                                        <div class="metric">
-                                            <span class="metric-label">Photos</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 85%;"></div>
-                                            </div>
-                                            <span class="metric-value">85%</span>
-                                        </div>
-                                        <div class="metric">
-                                            <span class="metric-label">Videos</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 92%;"></div>
-                                            </div>
-                                            <span class="metric-value">92%</span>
-                                        </div>
-                                        <div class="metric">
-                                            <span class="metric-label">Voice</span>
-                                            <div class="metric-bar">
-                                                <div class="metric-fill" style="width: 78%;"></div>
-                                            </div>
-                                            <span class="metric-value">78%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- My Activity -->
+                    <section class="activity-section">
+                        <h3>🎬 My Activity</h3>
+                        <div class="activity-grid">
+                            <p class="placeholder">No recent activity yet...</p>
                         </div>
                     </section>
 
-                    <!-- Achievement Trophy Room -->
-                    <section class="trophy-room">
-                        <h3>🏆 Achievement Trophy Room</h3>
-                        <div class="trophies-grid">
-                            <div class="trophy-3d active">
-                                <div class="trophy-model">🥇</div>
-                                <div class="trophy-info">
-                                    <h4>Top Earner</h4>
-                                    <p>$5K+ Monthly</p>
-                                </div>
-                            </div>
-                            <div class="trophy-3d active">
-                                <div class="trophy-model">⭐</div>
-                                <div class="trophy-info">
-                                    <h4>Fan Favorite</h4>
-                                    <p>1000+ Subscribers</p>
-                                </div>
-                            </div>
-                            <div class="trophy-3d">
-                                <div class="trophy-model">💎</div>
-                                <div class="trophy-info">
-                                    <h4>Premium Creator</h4>
-                                    <p>50K+ VibeCoins Earned</p>
-                                </div>
-                            </div>
+                    <!-- Favorite Creators -->
+                    <section class="favorites-section">
+                        <h3>⭐ Favorite Creators</h3>
+                        <div class="favorites-grid">
+                            <p class="placeholder">You haven't followed anyone yet.</p>
                         </div>
                     </section>
 
-                    <!-- ID Verification Section -->
-                    <section class="verification-section">
-                        <h3>🆔 ID Verification</h3>
-                        <div class="verification-card">
-                            <div class="verification-status">
-                                <span class="status-icon">✅</span>
-                                <span class="status-text">Verified Creator</span>
-                                <span class="blue-checkmark">💙</span>
-                            </div>
-                            <p>Your identity has been verified. You now have a blue checkmark badge!</p>
+                    <!-- Tips & Purchases -->
+                    <section class="tips-section">
+                        <h3>💰 Tips & Purchases</h3>
+                        <div class="tips-history">
+                            <p class="placeholder">No tips or purchases yet.</p>
+                            <button class="btn btn--primary btn--small">Buy Tokens</button>
                         </div>
                     </section>
 
-                    <!-- Geo-blocking Settings -->
-                    <section class="geo-blocking-section">
-                        <h3>🌍 Geo-blocking Settings</h3>
-                        <div class="geo-controls">
-                            <label class="form-label">Block My Content in These Countries</label>
-                            <select id="geoBlockSelect" class="form-control geo-select" multiple>
-                            </select>
-                            <button id="saveGeoBlocking" class="btn btn--primary">Save Geo Settings</button>
+                    <!-- Recommendations -->
+                    <section class="recommendations-section">
+                        <h3>🔥 Recommendations</h3>
+                        <div class="recommendations-grid">
+                            <p class="placeholder">Check back for suggested creators and events.</p>
+                        </div>
+                    </section>
+
+                    <!-- Personal Milestones -->
+                    <section class="milestones-section">
+                        <h3>🏅 Personal Milestones</h3>
+                        <div class="milestones-grid">
+                            <p class="placeholder">Watch streams to earn achievements!</p>
+                        </div>
+                    </section>
+
+                    <!-- Notifications & Inbox -->
+                    <section class="notifications-section">
+                        <h3>🔔 Notifications & Inbox</h3>
+                        <div class="notifications-list">
+                            <p class="placeholder">You're all caught up.</p>
+                        </div>
+                    </section>
+
+                    <!-- Account & Security -->
+                    <section class="account-section">
+                        <h3>⚙️ Account & Security</h3>
+                        <div class="account-actions">
+                            <button class="btn btn--secondary">Manage Settings</button>
+                        </div>
+                    </section>
+
+                    <!-- Help & Support -->
+                    <section class="support-section">
+                        <h3>❓ Help & Support</h3>
+                        <div class="support-links">
+                            <a href="#" class="btn btn--secondary">Visit Help Center</a>
                         </div>
                     </section>
                 </div>
