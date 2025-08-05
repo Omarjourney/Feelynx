@@ -204,7 +204,7 @@ function authenticate(req, res, next) {
   }
 }
 
-const frontendDir = path.join(__dirname, 'public');
+const frontendDir = path.join(__dirname, 'dist');
 // Serve the compiled frontend assets.
 app.use(express.static(frontendDir));
 
