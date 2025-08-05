@@ -7,12 +7,6 @@ export interface LiveStreamCardProps {
   streamPreviewUrl: string;
   badge?: 'LIVE' | 'VIP' | 'NEW' | 'TRENDING';
   onWatch?: () => void;
-  /**
-   * Indicates whether the stream is new. Some call sites expect this flag
-   * so we expose it here to avoid TypeScript errors when the property is
-   * provided. When `true` and no explicit badge is supplied, a `NEW` badge
-   * will be displayed.
-   */
   isNew?: boolean;
 }
 
