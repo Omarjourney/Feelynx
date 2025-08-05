@@ -1,5 +1,5 @@
 // Basic LiveKit client demo for Feelynx
-// Expects server endpoint /livekit-token returning { token, url }
+// Expects server endpoint /livekit/token returning { token }
 
 let room;
 
@@ -8,11 +8,13 @@ const remoteVideo = document.getElementById('remoteVideo');
 const startBtn = document.getElementById('startCall');
 const endBtn = document.getElementById('endCall');
 
-async function startCall() {
-  const res = await fetch(`/livekit-token?identity=user-${Math.floor(Math.random()*100000)}`);
-  const { token, url } = await res.json();
+const LIVEKIT_URL = 'ws://localhost:7880';
 
-  room = await LiveKit.connect(url, token, {audio:true, video:true});
+async function startCall() {
+  const res = await fetch(`/livekit/token?identity=user-${Math.floor(Math.random()*100000)}`);
+  const { token } = await res.json();
+
+  room = await LiveKit.connect(LIVEKIT_URL, token, {audio:true, video:true});
 
   room.localParticipant.tracks.forEach(pub => {
     const track = pub.track;
