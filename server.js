@@ -174,9 +174,11 @@ function authenticate(req, res, next) {
 }
 
 const frontendDir = path.join(__dirname, 'public');
+// Serve the compiled frontend assets.
 app.use(express.static(frontendDir));
 
-app.get('/health', (req, res) => {
+// Dedicated health-check endpoint so "/" always serves the app.
+app.get('/health', (_req, res) => {
   res.send('ok');
 });
 
@@ -249,7 +251,9 @@ app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, async (req, res) 
   }
 });
 
-app.get('*', (_, res) => {
+// Fallback: return the frontend's index.html for all other routes to
+// support client-side routing.
+app.get('*', (_req, res) => {
   res.sendFile(path.join(frontendDir, 'index.html'));
 });
 
