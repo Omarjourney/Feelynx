@@ -12,7 +12,10 @@ const ChatBox: React.FC = () => {
 
   const send = () => {
     if (!value) return;
-    setMessages([...messages, { id: messages.length + 1, author: 'me', text: value }]);
+    setMessages((prev) => [
+      ...prev,
+      { id: prev.length + 1, author: 'me', text: value },
+    ]);
     setValue('');
   };
 
