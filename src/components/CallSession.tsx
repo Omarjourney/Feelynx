@@ -18,9 +18,9 @@ const CallSession: React.FC<CallSessionProps> = ({ creatorName, ratePerMinute, o
       setSeconds((s) => s + 1);
     }, 1000);
     return () => {
-      if (intervalRef.current !== null) {
-        clearInterval(intervalRef.current);
-      }
+     if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+     }
       endCall();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
