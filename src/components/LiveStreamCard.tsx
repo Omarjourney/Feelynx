@@ -7,6 +7,13 @@ export interface LiveStreamCardProps {
   streamPreviewUrl: string;
   badge?: 'LIVE' | 'VIP' | 'NEW' | 'TRENDING';
   onWatch?: () => void;
+  /**
+   * Indicates whether the stream is new. Some call sites expect this flag
+   * so we expose it here to avoid TypeScript errors when the property is
+   * provided. When `true` and no explicit badge is supplied, a `NEW` badge
+   * will be displayed.
+   */
+  isNew?: boolean;
 }
 
 const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
@@ -16,6 +23,7 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
   streamPreviewUrl,
   badge,
   onWatch,
+  isNew,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -43,12 +51,17 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
     return () => observer.disconnect();
   }, []);
 
+  // If `isNew` is set, prefer showing the NEW badge unless another badge
+  // was explicitly provided. This mirrors the expected behaviour in the
+  // Explore page where streams can be marked as new.
+  const resolvedBadge = isNew && !badge ? 'NEW' : badge;
+
   const badgeColor = {
     LIVE: 'bg-red-500',
     VIP: 'bg-purple-500',
     NEW: 'bg-green-500',
     TRENDING: 'bg-yellow-500',
-  }[badge || 'LIVE'];
+  }[resolvedBadge || 'LIVE'];
 
   return (
     <div
