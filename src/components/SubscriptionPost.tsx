@@ -20,7 +20,7 @@ const SubscriptionPost: React.FC<SubscriptionPostProps> = ({
 }) => {
   const [unlocked, setUnlocked] = useState(!isLocked);
   const [showTip, setShowTip] = useState(false);
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const url = contentUrl.startsWith('http') ? contentUrl : `${base}${contentUrl}`;
 
   const unlock = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-interface LiveStreamCardProps {
+export interface LiveStreamCardProps {
   avatarUrl: string;
   username: string;
   viewerCount: number;
@@ -19,7 +19,7 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const avatarSrc = avatarUrl.startsWith('http') ? avatarUrl : `${base}${avatarUrl}`;
   const previewSrc = streamPreviewUrl.startsWith('http')
     ? streamPreviewUrl

@@ -8,13 +8,17 @@ interface Props {
 
 const CallInterface: React.FC<Props> = ({ creator, onEnd, rate }) => {
   const [seconds, setSeconds] = useState(0);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     intervalRef.current = window.setInterval(() => {
       setSeconds((s) => s + 1);
     }, 1000);
-    return () => clearInterval(intervalRef.current);
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
   const cost = ((seconds / 60) * rate).toFixed(2);

@@ -12,7 +12,7 @@ export interface Post {
 const PostCard: React.FC<{ post: Post }> = ({ post }) => {
   const [unlocked, setUnlocked] = useState(!post.locked);
   const [showTip, setShowTip] = useState(false);
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const src = post.src.startsWith('http') ? post.src : `${base}${post.src}`;
 
   return (

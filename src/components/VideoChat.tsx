@@ -1,7 +1,12 @@
 import React from 'react';
 import useWebRTC from '../hooks/useWebRTC';
 
-export default function VideoChat({ clientId, targetId }) {
+interface VideoChatProps {
+  clientId: string;
+  targetId: string;
+}
+
+const VideoChat: React.FC<VideoChatProps> = ({ clientId, targetId }) => {
   const { localVideoRef, remoteVideoRef, startCall, endCall } = useWebRTC(clientId, targetId);
 
   return (
@@ -16,4 +21,6 @@ export default function VideoChat({ clientId, targetId }) {
       </div>
     </div>
   );
-}
+};
+
+export default VideoChat;

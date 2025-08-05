@@ -9,7 +9,7 @@ interface CallSessionProps {
 
 const CallSession: React.FC<CallSessionProps> = ({ creatorName, ratePerMinute, onEnd }) => {
   const [seconds, setSeconds] = useState(0);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<number | null>(null);
   const { localVideoRef, remoteVideoRef, startCall, endCall, mediaError, isConnecting } = useWebRTC('local', creatorName);
 
   useEffect(() => {
@@ -18,7 +18,9 @@ const CallSession: React.FC<CallSessionProps> = ({ creatorName, ratePerMinute, o
       setSeconds((s) => s + 1);
     }, 1000);
     return () => {
-      clearInterval(intervalRef.current);
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
       endCall();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

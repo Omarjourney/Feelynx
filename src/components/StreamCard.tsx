@@ -11,7 +11,7 @@ interface Stream {
 
 const StreamCard: React.FC<{ stream: Stream }> = ({ stream }) => {
   const [preview, setPreview] = useState(false);
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const avatarSrc = stream.avatar.startsWith('http')
     ? stream.avatar
     : `${base}${stream.avatar}`;

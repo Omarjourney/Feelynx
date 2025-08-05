@@ -7,7 +7,7 @@ interface MiniPlayerProps {
 }
 
 const MiniPlayer: React.FC<MiniPlayerProps> = ({ streamUrl, username, onClose }) => {
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const src = streamUrl.startsWith('http') ? streamUrl : `${base}${streamUrl}`;
 
   return (

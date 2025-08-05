@@ -10,7 +10,7 @@ interface Group {
 }
 
 const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
-  const base = process.env.VITE_MEDIA_BASE_URL || '';
+  const base = import.meta.env.VITE_MEDIA_BASE_URL || '';
   const thumbSrc = group.thumbnail.startsWith('http')
     ? group.thumbnail
     : `${base}${group.thumbnail}`;
