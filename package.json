@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "expo start",
     "test": "node test.js",
     "build": "tsc && vite build",
     "dev": "vite"
