@@ -6,9 +6,23 @@ export default function useWebRTC(clientId, targetId) {
   const wsRef = useRef(null);
   const pcRef = useRef(null);
   const streamRef = useRef(null);
+  const wsReadyRef = useRef(null);
+  const messageQueueRef = useRef([]);
   const [mediaError, setMediaError] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionError, setConnectionError] = useState('');
+
+  const sendMessage = async (msg) => {
+    const data = typeof msg === 'string' ? msg : JSON.stringify(msg);
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(data);
+      return;
+    }
+    messageQueueRef.current.push(data);
+    if (wsReadyRef.current) {
+      await wsReadyRef.current;
+    }
+  };
 
   useEffect(() => {
     setConnectionError('');
@@ -18,6 +32,14 @@ export default function useWebRTC(clientId, targetId) {
     wsRef.current = new WebSocket(
       `${protocol}://${hostname}${port ? `:${port}` : ''}/ws`
     );
+
+    wsReadyRef.current = new Promise((resolve) => {
+      wsRef.current.onopen = () => {
+        messageQueueRef.current.forEach((m) => wsRef.current.send(m));
+        messageQueueRef.current.length = 0;
+        resolve();
+      };
+    });
 
     wsRef.current.onerror = (err) => {
       console.error('WebSocket connection error', err);
@@ -42,7 +64,7 @@ export default function useWebRTC(clientId, targetId) {
         await pcRef.current.setRemoteDescription(msg.offer);
         const answer = await pcRef.current.createAnswer();
         await pcRef.current.setLocalDescription(answer);
-        wsRef.current.send(JSON.stringify({ from: clientId, to: msg.from, answer }));
+        await sendMessage({ from: clientId, to: msg.from, answer });
       } else if (msg.answer) {
         await pcRef.current.setRemoteDescription(msg.answer);
       } else if (msg.candidate) {
@@ -62,8 +84,8 @@ export default function useWebRTC(clientId, targetId) {
   const ensurePeer = async () => {
     if (pcRef.current) return;
     pcRef.current = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-    pcRef.current.onicecandidate = ({ candidate }) => {
-      if (candidate) wsRef.current?.send(JSON.stringify({ from: clientId, to: targetId, candidate }));
+    pcRef.current.onicecandidate = async ({ candidate }) => {
+      if (candidate) await sendMessage({ from: clientId, to: targetId, candidate });
     };
     pcRef.current.ontrack = (e) => {
       remoteVideoRef.current.srcObject = e.streams[0];
@@ -83,7 +105,7 @@ export default function useWebRTC(clientId, targetId) {
       streamRef.current.getTracks().forEach(t => pcRef.current.addTrack(t, streamRef.current));
       const offer = await pcRef.current.createOffer();
       await pcRef.current.setLocalDescription(offer);
-      wsRef.current.send(JSON.stringify({ from: clientId, to: targetId, offer }));
+      await sendMessage({ from: clientId, to: targetId, offer });
     } catch (err) {
       setMediaError('Unable to access camera or microphone');
     } finally {
