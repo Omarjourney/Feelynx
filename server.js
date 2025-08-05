@@ -41,8 +41,17 @@ app.use(
 const DB_PATH = path.join(__dirname, 'db.json');
 
 async function readDB() {
-  const data = await fs.promises.readFile(DB_PATH, 'utf8');
-  return JSON.parse(data);
+  try {
+    const data = await fs.promises.readFile(DB_PATH, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    if (err.code === 'ENOENT' || err instanceof SyntaxError) {
+      const defaultData = { users: [], purchases: [] };
+      await writeDB(defaultData);
+      return defaultData;
+    }
+    throw err;
+  }
 }
 
 async function writeDB(data) {
