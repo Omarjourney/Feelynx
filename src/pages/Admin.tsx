@@ -41,7 +41,7 @@ const Admin: React.FC = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     });
-    setPendingCreators(pendingCreators.filter((c) => c.id !== id));
+    setPendingCreators((prev) => prev.filter((c) => c.id !== id));
   };
 
   const banUser = async (id: number) => {
@@ -58,7 +58,7 @@ const Admin: React.FC = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     });
-    setReports(reports.filter((r) => r.id !== id));
+    setReports((prev) => prev.filter((r) => r.id !== id));
   };
 
   return (
