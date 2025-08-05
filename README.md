@@ -41,16 +41,21 @@ For a more fully featured experience you can run the project against [LiveKit](h
 
 ### Room Management
 
-With your LiveKit credentials configured, the server exposes a few helper
-endpoints for room management:
+With your LiveKit credentials configured, the server exposes helper endpoints
+that the web and mobile apps can use to manage streaming rooms:
 
-- `POST /livekit-room` – create a room. Pass JSON such as
-  `{ "name": "myroom", "emptyTimeout": 600, "maxParticipants": 20 }`.
-- `GET /livekit-room` – list all active rooms.
-- `DELETE /livekit-room/:name` – delete a room by name.
+- `POST /livekit/create-room` – create a new room. Send JSON
+  `{ "name": "myroom" }`.
+- `POST /livekit/join-room` – ensure a room exists and receive a LiveKit token
+  for the authenticated user. Body example:
+  `{ "room": "myroom", "role": "creator" }`.
+- `POST /livekit/token` – generate a token without modifying the room. Body is
+  `{ "room": "myroom", "role": "fan" }`.
 
-These endpoints require `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` to be set and
-proxy directly to the LiveKit `RoomService` API.
+All requests require a valid JWT in the `Authorization: Bearer <token>` header.
+The generated LiveKit token inherits the user's identity and expires after one
+hour. Set `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` in your environment for
+these endpoints to work.
 
 ## Lovense Integration
 
@@ -91,6 +96,7 @@ available at `/health`.
 | `LIVEKIT_HOST` | LiveKit server URL. |
 | `LIVEKIT_API_KEY` | API key for LiveKit. |
 | `LIVEKIT_API_SECRET` | API secret for LiveKit. |
+| `CLIENT_ORIGIN` | Allowed frontend origin(s) for CORS. |
 | `FIREBASE_*` | Firebase configuration keys. |
 
 ### S3 Upload Folders
