@@ -204,8 +204,16 @@ function authenticate(req, res, next) {
   }
 }
 
-const frontendDir = path.join(__dirname, 'dist');
-// Serve the compiled frontend assets.
+// Determine the frontend directory. Prefer the built assets in "dist" if they
+// exist; otherwise fall back to the raw files in "public" so the server can
+// still serve something meaningful in development or when a build hasn't run
+// yet. This prevents 404 errors on the root path when the dist folder is
+// missing.
+const distDir = path.join(__dirname, 'dist');
+const publicDir = path.join(__dirname, 'public');
+const frontendDir = fs.existsSync(distDir) ? distDir : publicDir;
+
+// Serve the frontend assets from the chosen directory.
 app.use(express.static(frontendDir));
 
 // Dedicated health-check endpoint so "/" always serves the app.
