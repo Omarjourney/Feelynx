@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 import pathlib
 from routes import ws
 
@@ -22,3 +22,8 @@ async def serve_index():
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+# Serve the front-end for any other path so client-side routing works.
+@app.get("/{full_path:path}", include_in_schema=False)
+async def catch_all(full_path: str):
+    return FileResponse(FRONTEND_DIR / "index.html")
