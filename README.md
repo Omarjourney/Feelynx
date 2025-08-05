@@ -44,13 +44,14 @@ For a more fully featured experience you can run the project against [LiveKit](h
 With your LiveKit credentials configured, the server exposes helper endpoints
 that the web and mobile apps can use to manage streaming rooms:
 
-- `POST /livekit/create-room` – create a new room. Send JSON
-  `{ "name": "myroom" }`.
-- `POST /livekit/join-room` – ensure a room exists and receive a LiveKit token
-  for the authenticated user. Body example:
+- `GET` or `POST` `/livekit/create-room` – create a new room. Provide
+  `{ "name": "myroom" }` as JSON or query parameters.
+- `GET` or `POST` `/livekit/join-room` – ensure a room exists and receive a
+  LiveKit token for the authenticated user. Example payload:
   `{ "room": "myroom", "role": "creator" }`.
-- `POST /livekit/token` – generate a token without modifying the room. Body is
-  `{ "room": "myroom", "role": "fan" }`.
+- `GET` or `POST` `/livekit/token` – generate a token without modifying the
+  room. Supply `{ "room": "myroom", "role": "fan" }` via JSON or query
+  parameters.
 
 All requests require a valid JWT in the `Authorization: Bearer <token>` header.
 The generated LiveKit token inherits the user's identity and expires after one
