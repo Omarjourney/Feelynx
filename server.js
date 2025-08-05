@@ -222,9 +222,9 @@ app.get('/health', (_req, res) => {
 });
 
 // Generate a LiveKit access token for the authenticated user.
-// POST /livekit/token { room: string, role: 'creator' | 'fan' }
-app.post('/livekit/token', ensureLiveKitEnv, authenticate, (req, res) => {
-  const { room, role } = req.body;
+// POST or GET /livekit/token { room: string, role: 'creator' | 'fan' }
+function handleLivekitToken(req, res) {
+  const { room, role } = req.method === 'POST' ? req.body : req.query;
   if (!room || !role) {
     return res.status(400).json({ error: 'room and role are required' });
   }
@@ -241,13 +241,15 @@ app.post('/livekit/token', ensureLiveKitEnv, authenticate, (req, res) => {
     canSubscribe: true,
   });
   res.json({ token: at.toJwt() });
-});
+}
+app.post('/livekit/token', ensureLiveKitEnv, authenticate, handleLivekitToken);
+app.get('/livekit/token', ensureLiveKitEnv, authenticate, handleLivekitToken);
 
 // Create a new LiveKit room
-// POST /livekit/create-room { name: string }
-app.post('/livekit/create-room', ensureLiveKitEnv, authenticate, async (req, res) => {
+// POST or GET /livekit/create-room { name: string }
+async function handleCreateRoom(req, res) {
   try {
-    const { name } = req.body;
+    const { name } = req.method === 'POST' ? req.body : req.query;
     if (!name) {
       return res.status(400).json({ error: 'name is required' });
     }
@@ -256,12 +258,14 @@ app.post('/livekit/create-room', ensureLiveKitEnv, authenticate, async (req, res
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+}
+app.post('/livekit/create-room', ensureLiveKitEnv, authenticate, handleCreateRoom);
+app.get('/livekit/create-room', ensureLiveKitEnv, authenticate, handleCreateRoom);
 
 // Join an existing room. If it doesn't exist it will be created.
-// POST /livekit/join-room { room: string, role: 'creator' | 'fan' }
-app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, async (req, res) => {
-  const { room, role } = req.body;
+// POST or GET /livekit/join-room { room: string, role: 'creator' | 'fan' }
+async function handleJoinRoom(req, res) {
+  const { room, role } = req.method === 'POST' ? req.body : req.query;
   if (!room || !role) {
     return res.status(400).json({ error: 'room and role are required' });
   }
@@ -288,7 +292,9 @@ app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, async (req, res) 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+}
+app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
+app.get('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
 
 // Fallback: return the frontend's index.html for all other routes to
 // support client-side routing.
