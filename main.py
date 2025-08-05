@@ -15,5 +15,5 @@ FRONTEND_DIR = pathlib.Path(__file__).resolve().parent / "public"
 def health_check():
     return {"status": "ok"}
 
-# Serve the front-end and static assets
+# Serve the front-end and static assets with index fallback
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
