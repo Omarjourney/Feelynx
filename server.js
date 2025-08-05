@@ -144,6 +144,11 @@ function requireAdmin(req, res, next) {
   }
 }
 
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (_, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+);
+
 app.get('/health', (req, res) => {
   res.send('ok');
 });
