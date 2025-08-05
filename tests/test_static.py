@@ -15,7 +15,7 @@ def test_root_serves_index_html():
     assert response.text == index_path.read_text()
 
 def test_static_asset_served():
-    response = client.get("/assets/style.css")
+    response = client.get("/style.css")
     assert response.status_code == 200
     asset_path = Path(__file__).resolve().parent.parent / "public" / "style.css"
     assert response.text == asset_path.read_text()
