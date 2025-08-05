@@ -10,13 +10,14 @@ const mockStreams: Array<LiveStreamCardProps & { id: number }> = [
     badge: 'TRENDING',
     streamPreviewUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
   },
-  {
+  { 
     id: 2,
     username: 'creator2',
     viewerCount: 120,
     avatarUrl: 'https://placekitten.com/201/200',
     badge: 'NEW',
     streamPreviewUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    isNew: true,
   },
   {
     id: 3,
@@ -41,6 +42,7 @@ const Explore: React.FC = () => {
           viewerCount={s.viewerCount}
           badge={s.badge}
           streamPreviewUrl={s.streamPreviewUrl}
+          isNew={s.isNew}
         />
       ))}
     </div>
