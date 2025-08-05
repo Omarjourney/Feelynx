@@ -8,6 +8,7 @@ export interface LiveStreamCardProps {
   badge?: 'LIVE' | 'VIP' | 'NEW' | 'TRENDING';
   onWatch?: () => void;
   isNew?: boolean;
+  isFeatured?: boolean;
 }
 
 const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
