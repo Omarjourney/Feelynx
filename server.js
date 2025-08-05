@@ -24,7 +24,19 @@ if (!jwtSecret) {
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(helmet());
-app.use(cors());
+
+// Allow frontend applications to communicate with this API
+// CLIENT_ORIGIN may be a comma separated list of allowed origins
+const allowedOrigins = (process.env.CLIENT_ORIGIN || '')
+  .split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+app.use(
+  cors({
+    origin: allowedOrigins.length ? allowedOrigins : true,
+    credentials: true,
+  })
+);
 
 const DB_PATH = path.join(__dirname, 'db.json');
 
@@ -144,6 +156,23 @@ function requireAdmin(req, res, next) {
   }
 }
 
+// Authenticate standard users via JWT. The token is expected in the
+// Authorization header as `Bearer <token>`.
+function authenticate(req, res, next) {
+  const authHeader = req.headers['authorization'] || '';
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    const payload = jwt.verify(token, jwtSecret);
+    req.user = payload;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (_, res) =>
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
@@ -153,20 +182,31 @@ app.get('/health', (req, res) => {
   res.send('ok');
 });
 
-app.get('/livekit-token', ensureLiveKitEnv, (req, res) => {
-  const { identity, room } = req.query;
-  if (!identity) {
-    return res.status(400).json({ error: 'identity is required' });
+// Generate a LiveKit access token for the authenticated user.
+// POST /livekit/token { room: string, role: 'creator' | 'fan' }
+app.post('/livekit/token', ensureLiveKitEnv, authenticate, (req, res) => {
+  const { room, role } = req.body;
+  if (!room || !role) {
+    return res.status(400).json({ error: 'room and role are required' });
   }
+
+  const identity = String(req.user.id || req.user.sub || req.user.email);
   const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
     identity,
+    ttl: 60 * 60, // 1 hour
   });
-  at.addGrant({ roomJoin: true, room });
-  const token = at.toJwt();
-  res.json({ token });
+  at.addGrant({
+    room,
+    roomJoin: true,
+    canPublish: role === 'creator',
+    canSubscribe: true,
+  });
+  res.json({ token: at.toJwt() });
 });
 
-app.post('/rooms', ensureLiveKitEnv, async (req, res) => {
+// Create a new LiveKit room
+// POST /livekit/create-room { name: string }
+app.post('/livekit/create-room', ensureLiveKitEnv, authenticate, async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
@@ -179,19 +219,33 @@ app.post('/rooms', ensureLiveKitEnv, async (req, res) => {
   }
 });
 
-app.get('/rooms', ensureLiveKitEnv, async (req, res) => {
-  try {
-    const rooms = await roomService.listRooms();
-    res.json(rooms);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+// Join an existing room. If it doesn't exist it will be created.
+// POST /livekit/join-room { room: string, role: 'creator' | 'fan' }
+app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, async (req, res) => {
+  const { room, role } = req.body;
+  if (!room || !role) {
+    return res.status(400).json({ error: 'room and role are required' });
   }
-});
-
-app.delete('/rooms/:name', ensureLiveKitEnv, async (req, res) => {
   try {
-    await roomService.deleteRoom(req.params.name);
-    res.status(204).send();
+    try {
+      await roomService.createRoom({ name: room });
+    } catch (err) {
+      // ignore if room already exists
+    }
+
+    const identity = String(req.user.id || req.user.sub || req.user.email);
+    const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
+      identity,
+      ttl: 60 * 60,
+    });
+    at.addGrant({
+      room,
+      roomJoin: true,
+      canPublish: role === 'creator',
+      canSubscribe: true,
+    });
+
+    res.json({ token: at.toJwt() });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
