@@ -143,6 +143,28 @@ function ensureLiveKitEnv(req, res, next) {
 }
 
 async function uploadToS3(file, folder) {
+  if (
+    !folder ||
+    folder.startsWith('/') ||
+    folder.endsWith('/') ||
+    folder.includes('..') ||
+    !/^[A-Za-z0-9/_-]+$/.test(folder)
+  ) {
+    throw new Error('Invalid folder name');
+  }
+
+  const ext = path.extname(file.originalname);
+  const key = `${folder}/${crypto.randomUUID()}${ext}`;
+
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    })
+  );
+
   const base = process.env.MEDIA_BASE_URL || '';
   return `${base}${key}`;
 }
