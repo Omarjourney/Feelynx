@@ -173,10 +173,8 @@ function authenticate(req, res, next) {
   }
 }
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (_, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'index.html'))
-);
+const frontendDir = path.join(__dirname, 'public');
+app.use(express.static(frontendDir));
 
 app.get('/health', (req, res) => {
   res.send('ok');
@@ -249,6 +247,10 @@ app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, async (req, res) 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(frontendDir, 'index.html'));
 });
 
 const server = app.listen(port, () => {
