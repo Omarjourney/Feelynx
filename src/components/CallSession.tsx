@@ -9,12 +9,12 @@ interface CallSessionProps {
 
 const CallSession: React.FC<CallSessionProps> = ({ creatorName, ratePerMinute, onEnd }) => {
   const [seconds, setSeconds] = useState(0);
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { localVideoRef, remoteVideoRef, startCall, endCall, mediaError, isConnecting } = useWebRTC('local', creatorName);
 
   useEffect(() => {
     startCall();
-    intervalRef.current = window.setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setSeconds((s) => s + 1);
     }, 1000);
     return () => {
