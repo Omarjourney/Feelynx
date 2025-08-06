@@ -1006,15 +1006,22 @@ function renderContentGrid() {
 }
 
 function initializeContentFilters() {
-    const filters = document.querySelectorAll('.content-filter');
-    filters.forEach(filter => {
-        filter.addEventListener('click', function() {
-            filters.forEach(f => f.classList.remove('active'));
-            this.classList.add('active');this.setAttribute('aria-selected','true');this.setAttribute('tabindex','0');
-            
-            const type = this.dataset.type;
-            filterContentByType(type);
+    const container = document.querySelector('.content-filters');
+    if (!container) return;
+
+    container.addEventListener('click', (e) => {
+        const filter = e.target.closest('.content-filter');
+        if (!filter) return;
+
+        const filters = container.querySelectorAll('.content-filter');
+        filters.forEach(f => {
+            const isActive = f === filter;
+            f.classList.toggle('active', isActive);
+            f.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            f.setAttribute('tabindex', isActive ? '0' : '-1');
         });
+
+        filterContentByType(filter.dataset.type);
     });
 }
 
