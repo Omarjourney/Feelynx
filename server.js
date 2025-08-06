@@ -296,10 +296,9 @@ async function handleJoinRoom(req, res) {
 app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
 app.get('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
 
-// Fallback: return the frontend's index.html for all other routes to
-// support client-side routing.
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(frontendDir, 'index.html'));
+// Return 404 for any other routes.
+app.use((_req, res) => {
+  res.status(404).send('Not Found');
 });
 
 const server = app.listen(port, () => {
