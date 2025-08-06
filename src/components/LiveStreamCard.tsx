@@ -19,6 +19,7 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
   badge,
   onWatch,
   isNew,
+  isFeatured,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -61,7 +62,9 @@ const LiveStreamCard: React.FC<LiveStreamCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className="relative bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg"
+      className={`relative bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg ${
+        isFeatured ? 'ring-2 ring-yellow-400' : ''
+      }`}
       onClick={onWatch}
       tabIndex={0}
     >

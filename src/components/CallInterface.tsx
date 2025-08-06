@@ -8,10 +8,10 @@ interface Props {
 
 const CallInterface: React.FC<Props> = ({ creator, onEnd, rate }) => {
   const [seconds, setSeconds] = useState(0);
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    intervalRef.current = window.setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setSeconds((s) => s + 1);
     }, 1000);
     return () => {
