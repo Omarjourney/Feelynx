@@ -46,7 +46,15 @@ async function readDB() {
     return JSON.parse(data);
   } catch (err) {
     if (err.code === 'ENOENT' || err instanceof SyntaxError) {
-      const defaultData = { users: [], purchases: [] };
+      const defaultData = {
+        users: [],
+        purchases: [],
+        gifts: [
+          { id: 1, name: 'Rose', cost: 10 },
+          { id: 2, name: 'Diamond', cost: 100 },
+        ],
+        giftTransactions: [],
+      };
       await writeDB(defaultData);
       return defaultData;
     }
@@ -71,6 +79,41 @@ async function updateUserBalance(userId, tokens) {
     user.balance = (user.balance || 0) + tokens;
     await writeDB(db);
   }
+}
+
+async function sendGift(fromUserId, toUserId, giftId) {
+  const db = await readDB();
+  const gift = db.gifts.find(g => g.id === giftId);
+  const fromUser = db.users.find(u => u.id === fromUserId);
+  const toUser = db.users.find(u => u.id === toUserId);
+  if (!gift || !fromUser || !toUser) {
+    throw new Error('Invalid gift or user');
+  }
+  if ((fromUser.balance || 0) < gift.cost) {
+    throw new Error('Insufficient balance');
+  }
+  fromUser.balance -= gift.cost;
+  db.giftTransactions.push({
+    id: Date.now(),
+    fromUserId,
+    toUserId,
+    giftId,
+    cost: gift.cost,
+    created: new Date().toISOString(),
+  });
+  await writeDB(db);
+  return { balance: fromUser.balance };
+}
+
+async function getLeaderboard() {
+  const db = await readDB();
+  const totals = {};
+  for (const tx of db.giftTransactions) {
+    totals[tx.fromUserId] = (totals[tx.fromUserId] || 0) + tx.cost;
+  }
+  return Object.entries(totals)
+    .map(([userId, total]) => ({ userId: Number(userId), total }))
+    .sort((a, b) => b.total - a.total);
 }
 
 // Stripe webhook must be processed before body parsing
@@ -108,6 +151,22 @@ app.use(express.json());
 
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
 app.use(limiter);
+
+app.post('/gifts/send', authenticate, async (req, res) => {
+  const { toUserId, giftId } = req.body;
+  const fromUserId = req.user.id;
+  try {
+    const result = await sendGift(fromUserId, toUserId, giftId);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.get('/leaderboard', async (_req, res) => {
+  const leaderboard = await getLeaderboard();
+  res.json({ leaderboard });
+});
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -331,4 +390,9 @@ module.exports = {
   updateUserBalance,
   uploadToS3,
   requireAdmin,
+  readDB,
+  sendGift,
+  getLeaderboard,
+  server,
+  wss,
 };
