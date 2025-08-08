@@ -1,0 +1,11 @@
+{
+  "users": [
+    {"id": 1, "name": "Stub User", "balance": 0}
+  ],
+  "purchases": [],
+  "gifts": [
+    {"id": 1, "name": "Rose", "cost": 10},
+    {"id": 2, "name": "Diamond", "cost": 100}
+  ],
+  "giftTransactions": []
+}

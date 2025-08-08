@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "es2018",
+    "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "lib": ["dom", "dom.iterable", "es2018"]
+  },
+  "include": ["src/**/*"]
+}

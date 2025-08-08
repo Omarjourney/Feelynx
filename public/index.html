@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Feelynx is a premium adult entertainment platform connecting creators and fans.">
+    <title>Feelynx – Premium Adult Entertainment Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Add Google Fonts here -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Application (No Age Gate) -->
+    <div id="mainApp" class="main-app">
+        <!-- Navigation -->
+        <div class="feelynx-logo-nav" id="navLogo">
+  <img src="newfeelynx.svg" alt="Feelynx Mascot" style="height:40px;vertical-align:middle;">
+  <span class="feelynx-gradient" style="margin-left:8px;">Feelynx</span>
+</div>
+        
+            
+                    <button id="tab-explore" role="tab" aria-controls="explore" aria-selected="true" tabindex="0" class="nav-tab active" data-tab="explore">
+                        <span class="tab-icon">🌍</span>
+                        <span class="tab-text" data-i18n="nav.explore">Explore</span>
+                    </button>
+                    <button id="tab-creators" role="tab" aria-controls="creators" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="creators">
+                        <span class="tab-icon">⭐</span>
+                        <span class="tab-text" data-i18n="nav.creators">Creators</span>
+                    </button>
+                    <button id="tab-content" role="tab" aria-controls="content" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="content">
+                        <span class="tab-icon">📸</span>
+                        <span class="tab-text" data-i18n="nav.content">Content</span>
+                    </button>
+                    <button id="tab-calls" role="tab" aria-controls="calls" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="calls">
+                        <span class="tab-icon">📞</span>
+                        <span class="tab-text" data-i18n="nav.calls">Calls</span>
+                    </button>
+                    <button id="tab-tokens" role="tab" aria-controls="tokens" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="tokens">
+                        <span class="tab-icon">💎</span>
+                        <span class="tab-text" data-i18n="nav.tokens">VibeCoins</span>
+                    </button>
+                    <button id="tab-groups" role="tab" aria-controls="groups" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="groups">
+                        <span class="tab-icon">👥</span>
+                        <span class="tab-text" data-i18n="nav.groups">Groups</span>
+                    </button>
+                    <button id="tab-dashboard" role="tab" aria-controls="dashboard" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="dashboard">
+                        <span class="tab-icon">📊</span>
+                        <span class="tab-text" data-i18n="nav.dashboard">Dashboard</span>
+                    </button>
+                    <button id="tab-golive" role="tab" aria-controls="golive" aria-selected="false" tabindex="-1" class="nav-tab" data-tab="golive">
+                        <span class="tab-icon"></span>
+                        <span class="tab-text" data-i18n="nav.golive">Go Live</span>
+                    </button>
+                </div>
+                <div class="nav-language">
+                    <select id="languageSelector" class="language-select">
+                        <option value="en">🌐 English</option>
+                        <option value="es">🌐 Español</option>
+                        <option value="pt">🌐 Português</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="main-content">
+            <!-- Explore Tab -->
+            <div id="explore" class="tab-content active" role="tabpanel" aria-labelledby="tab-explore">
+                <div class="container">
+                    <!-- Hero Section -->
+                    <section class="hero-section">
+                        <div class="hero-content">
+                            <h1 class="hero-title" data-i18n="hero.title">Join the Hottest Creators Now</h1>
+                            <p class="hero-subtitle" data-i18n="hero.subtitle">Connect with premium creators from around the world on Feelynx</p>
+                            <div class="hero-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value" data-count="847000">847,000+</span>
+                                    <span class="stat-label">Active Users</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" data-count="25000">25,000+</span>
+                                    <span class="stat-label">Creators</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" data-count="2400000">$2.4M+</span>
+                                    <span class="stat-label">Revenue</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Live Creator Carousel -->
+                    <section class="live-carousel-section">
+                        <h2 data-i18n="live.now">🔴 Live Now</h2>
+                        <div class="live-carousel" id="liveCarousel">
+                            <p class="no-js-fallback">Live content loading...</p>
+                        </div>
+                    </section>
+
+                    <!-- Featured Sections -->
+                    <section class="featured-sections">
+                        <div class="section-tabs">
+                            <button class="section-tab active" data-section="featured" data-i18n="section.featured">Featured Creators</button>
+                            <button class="section-tab" data-section="today" data-i18n="section.today">Today's Creators</button>
+                            <button class="section-tab" data-section="weekly" data-i18n="section.weekly">Weekly Standouts</button>
+                            <button class="section-tab" data-section="alltime" data-i18n="section.alltime">All-Time Favorites</button>
+                        </div>
+                        
+                        <div class="section-content">
+                            <div id="featured" class="creator-section active">
+                                <div class="creator-grid" id="featuredCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
+                            </div>
+                            <div id="today" class="creator-section">
+                                <div class="creator-grid" id="todayCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
+                            </div>
+                            <div id="weekly" class="creator-section">
+                                <div class="creator-grid" id="weeklyCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
+                            </div>
+                            <div id="alltime" class="creator-section">
+                                <div class="creator-grid" id="alltimeCreators">
+                                    <p class="no-js-fallback">Creator list loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Creators Tab -->
+            <div id="creators" class="tab-content" role="tabpanel" aria-labelledby="tab-creators">
+                <div class="container">
+                    <!-- Live Now Carousel -->
+                    <section class="live-carousel-section">
+                        <h2 data-i18n="live.now">🔴 Live Now</h2>
+                        <div class="live-carousel" id="liveCarouselCreators">
+                            <p class="no-js-fallback">Live content loading...</p>
+                        </div>
+                    </section>
+
+                    <!-- Search & Filters -->
+                    <div class="premium-search-filters">
+                        <div class="search-bar">
+                            <div class="search-input-container">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" class="form-control search-input" id="creatorSearch" data-i18n="creator.search.placeholder" placeholder="Search creators by @username, country, or specialties...">
+                            </div>
+                        </div>
+                        
+                        <div class="advanced-filters">
+                            <select id="countryFilter" class="form-control filter-select">
+                                <option value="" data-i18n="filter.allCountries">🌍 All Countries</option>
+                            </select>
+                            
+                            <select id="ageFilter" class="form-control filter-select">
+                                <option value="" data-i18n="filter.allAges">👤 All Ages</option>
+                                <option value="18-24">18-24</option>
+                                <option value="25-34">25-34</option>
+                                <option value="35-44">35-44</option>
+                                <option value="45+">45+</option>
+                            </select>
+                            
+                            <select id="specialtyFilter" class="form-control filter-select">
+                                <option value="" data-i18n="filter.allSpecialties">✨ All Specialties</option>
+                            </select>
+                            
+                            <div class="filter-toggles">
+                                <label class="toggle-label">
+                                    <input type="checkbox" id="onlineOnlyFilter" class="toggle-input">
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-text" data-i18n="filter.onlineOnly">Online Only</span>
+                                </label>
+                                
+                                <label class="toggle-label">
+                                    <input type="checkbox" id="toyConnectedFilter" class="toggle-input">
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-text" data-i18n="filter.toyConnected">Toy Connected</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="creator-grid" id="allCreators">
+                        <p class="no-js-fallback">Creator list loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Tab -->
+            <div id="content" class="tab-content" role="tabpanel" aria-labelledby="tab-content">
+                <div class="container">
+                    <div class="content-header">
+                        <h2 data-i18n="content.header">Premium Content Marketplace</h2>
+                        <div class="content-filters">
+                            <button class="content-filter active" data-type="all" data-i18n="content.filter.all">All Content</button>
+                            <button class="content-filter" data-type="photos" data-i18n="content.filter.photos">📸 Photos</button>
+                            <button class="content-filter" data-type="videos" data-i18n="content.filter.videos">🎥 Videos</button>
+                            <button class="content-filter" data-type="voice" data-i18n="content.filter.voice">🎵 Voice</button>
+                            <button class="content-filter" data-type="bundles" data-i18n="content.filter.bundles">📦 Bundles</button>
+                        </div>
+                    </div>
+                    <div class="content-grid" id="contentGrid">
+                        <p class="no-js-fallback">Content loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calls Tab -->
+            <div id="calls" class="tab-content" role="tabpanel" aria-labelledby="tab-calls">
+                <div class="container">
+                    <div class="calls-header">
+                        <h2 data-i18n="calls.header">Private Video & Voice Calls</h2>
+                        <div class="call-rates">
+                            <div class="rate-info">
+                                <span class="rate-icon">📹</span>
+                                <span>Video: 30 VibeCoins/min</span>
+                            </div>
+                            <div class="rate-info">
+                                <span class="rate-icon">🎵</span>
+                                <span>Voice: 20 VibeCoins/min</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="call-creators" id="callCreators">
+                        <p class="no-js-fallback">Creators loading...</p>
+                    </div>
+
+                    <div class="webrtc-demo">
+                        <button id="startCall" data-i18n="calls.start">Start Call</button>
+                        <div id="videos">
+                            <video id="localVideo" autoplay muted></video>
+                            <video id="remoteVideo" autoplay></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- Added link to the offline WebRTC guide. This appears below the demo
+                 controls so users can access a concise reference while using
+                 the Calls tab. The linked markdown file resides in the public
+                 folder and is served statically by the API. -->
+            <div class="peer-guide" style="margin-top: 1rem;">
+                <a href="peer-connections-overview.md" target="_blank"
+                   class="text-sm text-blue-600 hover:underline">View Peer Connection Guide</a>
+            </div>
+
+
+            <!-- Tokens Tab -->
+            <div id="tokens" class="tab-content" role="tabpanel" aria-labelledby="tab-tokens">
+                <div class="container">
+                    <div class="tokens-header">
+                        <h2 data-i18n="tokens.header">💎 Purchase VibeCoins</h2>
+                        <p class="tokens-subtitle" data-i18n="tokens.subtitle">Unlock premium content and features with VibeCoins</p>
+                    </div>
+                    
+                    <div class="token-packs" id="tokenPacks">
+                        <p class="no-js-fallback">VibeCoin packs loading...</p>
+                    </div>
+                    
+                    <div class="mystery-bonus-info">
+                        <h3>🎁 Mystery Bonus System</h3>
+                        <div class="bonus-features">
+                            <div class="bonus-item">
+                                <span class="bonus-icon">🎯</span>
+                                <span>Spin-to-reveal animations</span>
+                            </div>
+                            <div class="bonus-item">
+                                <span class="bonus-icon">🎊</span>
+                                <span>Confetti celebrations</span>
+                            </div>
+                            <div class="bonus-item">
+                                <span class="bonus-icon">🏆</span>
+                                <span>VIP access rewards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groups Tab -->
+            <div id="groups" class="tab-content" role="tabpanel" aria-labelledby="tab-groups">
+                <div class="container">
+                    <div class="groups-header">
+                        <h2 data-i18n="groups.header">👥 Private Groups</h2>
+                        <p class="groups-subtitle" data-i18n="groups.subtitle">Join exclusive communities with 24hr expiring invites</p>
+                    </div>
+
+                    <!-- Group Announcements -->
+                    <section class="group-announcements">
+                        <h3 data-i18n="groups.announcements">📢 Group Announcements</h3>
+                        <div class="announcements-grid" id="announcementsGrid">
+                            <p class="no-js-fallback">Announcements loading...</p>
+                        </div>
+                    </section>
+
+                    <!-- Create Group -->
+                    <section class="create-group-section">
+                        <div class="create-group-card">
+                            <h4 data-i18n="groups.createHeader">Create New Private Group</h4>
+                            <p data-i18n="groups.createDesc">Build your exclusive community with 24hr expiring invites</p>
+                            <button class="btn btn--primary" id="createGroupBtn" data-i18n="groups.createButton">Create Group</button>
+                        </div>
+                    </section>
+
+                    <!-- Groups Grid -->
+                    <section class="groups-section">
+                        <h3 data-i18n="groups.yourGroups">Your Groups</h3>
+                        <div class="groups-grid" id="groupsGrid">
+                            <p class="no-js-fallback">No groups found...</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-dashboard">
+                <div class="container">
+                    <div class="dashboard-header">
+                        <h2>Fan Dashboard</h2>
+                        <div class="dashboard-stats">
+                            <div class="quick-stat">
+                                <img src="https://placehold.co/60" alt="User avatar" class="avatar"/>
+                                <div class="stat-info">
+                                    <span class="stat-value">Username</span>
+                                    <span class="stat-label">Gold Tier</span>
+                                </div>
+                            </div>
+                            <div class="quick-stat">
+                                <span class="stat-value">1,250</span>
+                                <span class="stat-label">Tokens</span>
+                                <button class="btn btn--primary btn--small">Buy Tokens</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- My Activity -->
+                    <section class="activity-section">
+                        <h3>🎬 My Activity</h3>
+                        <div class="activity-grid">
+                            <p class="placeholder">No recent activity yet...</p>
+                        </div>
+                    </section>
+
+                    <!-- Favorite Creators -->
+                    <section class="favorites-section">
+                        <h3>⭐ Favorite Creators</h3>
+                        <div class="favorites-grid">
+                            <p class="placeholder">You haven't followed anyone yet.</p>
+                        </div>
+                    </section>
+
+                    <!-- Tips & Purchases -->
+                    <section class="tips-section">
+                        <h3>💰 Tips & Purchases</h3>
+                        <div class="tips-history">
+                            <p class="placeholder">No tips or purchases yet.</p>
+                            <button class="btn btn--primary btn--small">Buy Tokens</button>
+                        </div>
+                    </section>
+
+                    <!-- Recommendations -->
+                    <section class="recommendations-section">
+                        <h3>🔥 Recommendations</h3>
+                        <div class="recommendations-grid">
+                            <p class="placeholder">Check back for suggested creators and events.</p>
+                        </div>
+                    </section>
+
+                    <!-- Personal Milestones -->
+                    <section class="milestones-section">
+                        <h3>🏅 Personal Milestones</h3>
+                        <div class="milestones-grid">
+                            <p class="placeholder">Watch streams to earn achievements!</p>
+                        </div>
+                    </section>
+
+                    <!-- Notifications & Inbox -->
+                    <section class="notifications-section">
+                        <h3>🔔 Notifications & Inbox</h3>
+                        <div class="notifications-list">
+                            <p class="placeholder">You're all caught up.</p>
+                        </div>
+                    </section>
+
+                    <!-- Account & Security -->
+                    <section class="account-section">
+                        <h3>⚙️ Account & Security</h3>
+                        <div class="account-actions">
+                            <button class="btn btn--secondary">Manage Settings</button>
+                        </div>
+                    </section>
+
+                    <!-- Help & Support -->
+                    <section class="support-section">
+                        <h3>❓ Help & Support</h3>
+                        <div class="support-links">
+                            <a href="#" class="btn btn--secondary">Visit Help Center</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Go Live Tab -->
+            <div id="golive" class="tab-content" role="tabpanel" aria-labelledby="tab-golive">
+                <div class="container">
+                    <h2>Go Live</h2>
+                    <p>Test your camera and microphone before broadcasting.</p>
+                    <div class="webrtc-demo">
+                        <button id="startBroadcast" data-i18n="golive.start">Start Broadcast</button>
+                        <div id="broadcastArea">
+                            <video id="broadcastVideo" autoplay muted></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- USD Tip Modal -->
+    <div id="tipModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tipModalTitle">
+        <div class="modal-content premium-modal">
+            <div class="modal-header">
+                <h3 id="tipModalTitle">💸 Direct USD Tip</h3>
+                <div class="tip-info">Creator keeps 94% • Direct credit card charge</div>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tip-amounts" id="tipAmounts"></div>
+                <div class="custom-tip">
+                    <input type="number" id="customTipAmount" class="form-control" placeholder="Custom amount ($)" min="1">
+                </div>
+                <div id="tipConfirmation" class="tip-confirmation hidden">
+                    <div class="confirmation-card">
+                        <p id="tipConfirmText"></p>
+                        <div class="payment-security">
+                            <span class="security-icon">🔒</span>
+                            <span>Secure payment processing</span>
+                        </div>
+                        <button id="confirmTip" class="btn btn--primary btn--full-width">Confirm Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+        <div class="modal-content success-modal">
+            <div class="success-animation">
+                <div class="success-icon">🎉</div>
+                <div class="sparkles" id="successSparkles"></div>
+            </div>
+            <h3 id="successTitle">Success!</h3>
+            <p id="successMessage"></p>
+            <button id="closeSuccess" class="btn btn--primary">Continue</button>
+        </div>
+    </div>
+
+    <!-- Group Creation Modal -->
+    <div id="groupModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="groupModalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="groupModalTitle">Create Private Group</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Group Name</label>
+                    <input type="text" id="groupName" class="form-control" placeholder="Enter group name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Group Theme</label>
+                    <select id="groupTheme" class="form-control">
+                        <option value="general">General</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="interactive">Interactive</option>
+                    </select>
+                </div>
+                <div class="invite-info">
+                    <p>📅 Invite links expire in 24 hours</p>
+                    <p>👥 Maximum 50 members per group</p>
+                    <p>🎭 Support multi-creator live shows</p>
+                </div>
+                <button id="createGroup" class="btn btn--primary btn--full-width" data-i18n="groups.createButton">Create Group</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="lovense.js" defer></script>
+    <script src="webrtc.js" defer></script>
+    <script src="coinPackages.js" defer></script>
+    <script src="app.js" defer></script>
+    <script src="goLiveButton.js" defer></script>
+</body>
+</html>
