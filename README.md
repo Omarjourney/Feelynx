@@ -18,7 +18,14 @@ If you cannot access the official WebRTC guides, see [`docs/peer-connections-ove
    The WebRTC client automatically connects to the same host and port that served the page.
 4. Open `index.html` (or `webrtc.html`) in two separate browser windows. Navigate to the **Calls** tab and press **Start Call** in one of them to begin a peer‑to‑peer connection. Allow camera and microphone permissions when prompted.
 
-The demo uses a basic WebSocket signaling server and `RTCPeerConnection` with Google's public STUN server. The `Calls` tab on the main site now embeds the same WebRTC demo.
+5. If you need a quick refresher on how WebRTC peer connections work, click
+   the **Peer Connection Guide** link located under the call controls. This
+   opens a short, offline Markdown document explaining the key steps for
+   setting up a connection. The same link is available on the standalone
+
+    WebRTC demo page.
+
+The  demo uses a basic WebSocket signaling server and `RTCPeerConnection` with Google's public STUN server. The `Calls` tab on the main site now embeds the same WebRTC demo.
 
 ## LiveKit Setup
 
