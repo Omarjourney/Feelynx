@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^4.3.4",
     "vite": "5.4.19",
     "typescript": "^5.6.3"
   }
