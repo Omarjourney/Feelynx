@@ -368,7 +368,6 @@ async function handleJoinRoom(req, res) {
 app.post('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
 app.get('/livekit/join-room', ensureLiveKitEnv, authenticate, handleJoinRoom);
 
-// Serve the SPA index for any unknown route so client-side routing works.
 app.get('*', (_req, res) =>
   res.sendFile(path.join(frontendDir, 'index.html'))
 );
