@@ -12,8 +12,17 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { AccessToken, RoomServiceClient } = require('livekit-server-sdk');
+// 
+let stripe;
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (stripeSecretKey) {
+  stripe = new Stripe(stripeSecretKey);
+} else {
+  console.warn('Stripe secret key not provided. Stripe functionality disabled.');
+  stripe = null;
+}
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
 const jwtSecret = process.env.JWT_SECRET;
 if (!jwtSecret) {
@@ -118,7 +127,11 @@ async function getLeaderboard() {
 
 // Stripe webhook must be processed before body parsing
 app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-  const sig = req.headers['stripe-signature'];
+  
+    if (!stripe) {
+    return res.status(503).json({ error: 'Stripe is not configured' });
+  }
+const sig = req.headers['stripe-signature'];
   let event;
   try {
     event = stripe.webhooks.constructEvent(
